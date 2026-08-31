@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product - SOPHÉA</title>
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/product.css" />
+  <link rel="stylesheet" href="css/stl.css" />
+  <link rel="icon" type="image/png" href="images/fav-icon-goud.png" />
+</head>
+<body>
+    <div class="sale-balk">
+        <p class="sale-balk__vol"> Gratis verzending op bestellingen vanaf <strong>€50</strong></p>
+        <p class="sale-balk__kort">Gratis verzending op bestellingen vanaf <strong>€50</strong></p>
+    </div>
+    <header class="nav">
+    <div class="nav__links">
+      <button class="nav__hamburger" id="hamburgerBtn" aria-label="Menu openen">
+        <span></span><span></span><span></span>
+      </button>
+      <button class="nav__search" aria-label="Zoeken">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+      </button>
+    </div>
+    <a href="index.html" class="nav__logo">
+      <img src="images/sophea.png" alt="SOPHÉA logo" />
+    </a>
+    <div class="nav__rechts">
+    <button class="nav__account" id="accountBtn" aria-label="Account">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="7.5" r="4.5"/>
+          <path d="M3.5 20.5c0-4.7 3.8-8.5 8.5-8.5s8.5 3.8 8.5 8.5"/>
+        </svg>
+    </button>
+    <button class="nav__cart" aria-label="Winkelwagen">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+    </svg>
+    <span class="nav__cart-badge" id="cartBadge" style="display:none;">0</span>
+    </button>
+    </div>
+  </header>
+
+  <!-- HAMBURGER DROPDOWN -->
+    <div class="nav-overlay" id="navOverlay">
+    <div class="nav-overlay__sluit-wrapper">
+        <button class="nav-overlay__sluit" id="sluitBtn" aria-label="Menu sluiten">✕</button>
+    </div>
+    <nav class="nav-overlay__links">
+        <a href="index.html">Home</a>
+        <button class="nav-overlay__link-pijl" id="collectieBtn">
+        Shop
+        <span class="nav-overlay__pijl">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+            </svg>
+        </span>
+        </button>
+        <a href="collectie.html?categorie=handchains">Hand chains</a>
+        <a href="collectie.html?categorie=kettingen">Kettingen</a>
+        <a href="collectie.html?categorie=oorbellen">Oorbellen</a>
+        <a href="collectie.html?categorie=sets">Sets</a>
+    </nav>
+    <div class="nav-submenu" id="collectieSubmenu">
+        <button class="nav-submenu__terug" id="submenuTerug">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        Terug
+        </button>
+        <p class="nav-submenu__titel">Shop</p>
+        <div class="nav-submenu__groep">
+        <p class="nav-submenu__label">SHOP</p>
+        <a href="collectie.html">Alles</a>
+        <a href="collectie.html?categorie=nieuw">Nieuw</a>
+        <a href="collectie.html?categorie=bestsellers">Bestsellers</a>
+        </div>
+        <div class="nav-submenu__groep">
+        <p class="nav-submenu__label">COLLECTIES</p>
+        <!-- Voeg hier straks je eigen collecties toe, bv: -->
+        <!-- <a href="collectie.html?collectie=zomer-editie">Zomer Editie</a> -->
+        </div>
+    </div>
+    <div class="nav-overlay__bottom">
+        <p class="nav-overlay__col-title">INFO</p>
+        <div class="nav-overlay__col-links">
+            <a href="faq.html">Veelgestelde vragen</a>
+            <a href="contact.html">Contact</a>
+            <a href="over-mij.html">Over SOPHÉA</a>
+        </div>
+        <div style="margin-top: 1.5rem;">
+            <p class="nav-overlay__col-title">VOLG ONS</p>
+            <div class="nav-overlay__col-links nav-overlay__col-links--socials">
+              <a href="https://instagram.com/sophea.nl" target="_blank">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="2" y="2" width="20" height="20" rx="5"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                </svg>
+                @sophea.nl
+              </a>
+              <a href="https://www.tiktok.com/@sophea.nl" target="_blank">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M13 3v11.5a4 4 0 1 1-4-4c.35 0 .68.04 1 .1" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M13 3c.3 3 2.5 5.3 5.5 5.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M18.5 8.5v3.5" stroke-linecap="round"/>
+                </svg>
+                @sophea.nl
+              </a>
+            </div>
+        </div>
+        </div>
+        <p class="nav-overlay__tagline-bottom">Handmade Jewellery · 't Gooi</p>
+    </div>
+  </div>
+
+    <!-- ZOEK OVERLAY -->
+    <div class="zoek-overlay" id="zoekOverlay">
+    <div class="zoek-overlay__header">
+        <div class="zoek-overlay__balk">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" id="zoekInput" class="zoek-overlay__input" placeholder="Zoek naar een sieraad..." />
+        <button class="zoek-overlay__wis" id="zoekWis">✕</button>
+        </div>
+        <button class="zoek-overlay__sluit" id="zoekSluit">Sluiten</button>
+    </div>
+    <div class="zoek-overlay__inhoud">
+        <div class="zoek-overlay__leeg" id="zoekLeeg">
+        <p class="zoek-overlay__eyebrow">POPULAIR</p>
+        <div class="zoek-overlay__grid" id="zoekPopulair"></div>
+        </div>
+        <div class="zoek-overlay__gevonden" id="zoekGevonden" style="display:none;">
+        <p class="zoek-overlay__label" id="zoekLabel"></p>
+        <div class="zoek-overlay__grid" id="zoekGrid"></div>
+        </div>
+        <div class="zoek-overlay__niets" id="zoekNiets" style="display:none;">
+        <p class="zoek-overlay__niets-tekst">Geen resultaten voor "<span id="zoekNietsTerm"></span>"</p>
+        <p class="zoek-overlay__niets-sub">Probeer een andere zoekterm.</p>
+        </div>
+    </div>
+    </div>
+    <div class="zoek-backdrop" id="zoekBackdrop"></div>
+
+    <!-- WINKELWAGEN OVERLAY -->
+    <div class="cart-overlay" id="cartOverlay">
+    <div class="cart-overlay__header">
+        <p class="cart-overlay__titel">Winkelwagen</p>
+        <button class="cart-overlay__sluit" id="cartSluit">✕</button>
+    </div>
+    <div class="cart-overlay__verzend-balk" id="cartVerzendBalk" style="display:none;">
+        <p class="cart-overlay__verzend-tekst" id="cartVerzendTekst"></p>
+        <div class="cart-overlay__progress">
+        <div class="cart-overlay__progress-bar" id="cartProgressBar"></div>
+        </div>
+    </div>
+    <div class="cart-overlay__items" id="cartItems"></div>
+    <div class="cart-overlay__leeg" id="cartLeeg" style="display:none;">
+        <p class="cart-overlay__leeg-tekst">Je winkelwagen is leeg.</p>
+        <a href="collectie.html" class="cart-overlay__leeg-btn">BEKIJK DE COLLECTIE →</a>
+    </div>
+    <div class="cart-overlay__footer" id="cartFooter" style="display:none;">
+        <div class="cart-overlay__regel">
+        <span>Subtotaal</span>
+        <span id="cartSubtotaal">€ 0,00</span>
+        </div>
+        <div class="cart-overlay__regel">
+        <span>Verzending</span>
+        <span id="cartVerzending">Gratis</span>
+        </div>
+        <div class="cart-overlay__regel cart-overlay__regel--totaal">
+        <span>Totaal</span>
+        <span id="cartTotaal">€ 0,00</span>
+        </div>
+        <div class="cart-overlay__verzend-info">
+        <p>✓ Gratis verzending vanaf €50,-</p>
+        <p>✓ Binnen 3-5 werkdagen in huis</p>
+        </div>
+        <button class="cart-overlay__afrekenen" id="cartAfrekenen">AFREKENEN</button>
+        <a href="collectie.html" class="cart-overlay__verder">← Verder winkelen</a>
+    </div>
+    </div>
+    <div class="cart-backdrop" id="cartBackdrop"></div>
+
+  <main>
+
+    <!-- TERUG + BREADCRUMB -->
+    <div class="nav-sub">
+      <button class="nav-sub__terug" id="navSubTerug">← <span class="nav-sub__terug-label">Terug</span></button>
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>›</span>
+        <a href="collectie.html">Collectie</a>
+        <span>›</span>
+        <span id="breadcrumbNaam">Gouden Hand chain Combi</span>
+      </nav>
+    </div>
+
+    <!-- PRODUCT SECTIE -->
+    <section class="product">
+
+      <!-- FOTO KOLOM -->
+      <div class="product__fotos" id="productFotos">
+        <div class="product__foto-item">
+          <div class="product__foto-placeholder">
+            FOTO<br><small>wordt geladen...</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- INFO KOLOM -->
+      <div class="product__info">
+
+        <div class="product__badges" id="productBadges"></div>
+
+        <h1 class="product__titel" id="productTitel">
+          Gouden Hand chain<br><em>Combi</em>
+        </h1>
+
+        <div class="product__divider"></div>
+
+        <div id="productKleuren"></div>
+
+        <p class="product__prijs" id="productPrijs">€ 45,00</p>
+
+        <span class="product__op-voorraad" id="productOpVoorraad"></span>
+
+        <button class="product__cta" id="winkelwagenBtn">IN WINKELWAGEN</button>
+        <button class="product__bewaar" id="productBewaarBtn">♡ BEWAAR</button>
+
+        <ul class="product__usps">
+          <li>✓ Gratis verzending vanaf € 50</li>
+          <li>✓ Binnen 3-5 werkdagen in huis</li>
+          <li>✓ Handgemaakt door Sophia</li>
+        </ul>
+
+        <!-- ACCORDEON — wordt gevuld door product.js met Shopify-data -->
+        <div class="accordeon" id="productAccordeon"></div>
+
+      </div>
+    </section>
+
+    <!-- TIKTOK INSPO -->
+    <section class="tiktok">
+      <div class="tiktok__intro">
+        <p class="tiktok__eyebrow">TIKTOK</p>
+        <h2 class="tiktok__titel">Sieraden inspo</h2>
+        <div class="tiktok__divider"></div>
+      </div>
+
+      <div class="tiktok__grid" id="tiktokGrid"></div>
+    </section>  
+
+    <!-- TIKTOK OVERLAY -->
+    <div class="tiktok-overlay" id="tiktokOverlay">
+      <div class="tiktok-overlay__content">
+        <button class="tiktok-overlay__sluit" id="tiktokSluit">✕</button>
+
+        <div class="tiktok-overlay__links">
+          <button class="tiktok-overlay__nav tiktok-overlay__nav--links" id="tiktokVorige">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+          </button>
+          <video class="tiktok-overlay__video" id="tiktokOverlayVideo" loop playsinline autoplay></video>
+          <button class="tiktok-overlay__nav tiktok-overlay__nav--rechts" id="tiktokVolgende">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+          <div class="tiktok-overlay__info">
+            <span class="tiktok-overlay__naam" id="tiktokOverlayNaam"></span>
+            <button class="tiktok-overlay__geluid" id="tiktokGeluid">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                <path class="geluid-aan" d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                <path class="geluid-aan" d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="tiktok-overlay__rechts">
+          <p class="tiktok-overlay__titel">Shop the look</p>
+          <div class="stl__producten" id="tiktokProduct">
+            <!-- Dynamisch geladen -->
+          </div>
+          <p class="tiktok-overlay__sub">✓ Gratis verzending vanaf €50,-</p>
+        </div>
+      </div>
+    </div>
+    <div class="tiktok-backdrop" id="tiktokBackdrop"></div>
+
+    <!-- ANDEREN BEKEKEN OOK -->
+    <section class="ook-leuk">
+      <div class="ook-leuk__intro">
+        <p class="ook-leuk__eyebrow">MISSCHIEN OOK LEUK</p>
+        <h2 class="ook-leuk__titel">Anderen bekeken ook</h2>
+        <div class="ook-leuk__divider"></div>
+      </div>
+      <div class="ook-leuk__grid" id="ookLeukGrid"></div>
+    </section>
+
+    <!-- #SOPHÉA CARROUSEL -->
+    <section class="stl">
+      <div class="stl__intro">
+        <h2 class="stl__titel">#SOPHÉA</h2>
+      </div>
+      <div class="stl__carrousel-wrapper">
+        <button class="stl__nav stl__nav--links" id="stlCarrouselVorige" aria-label="Vorige">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <div class="stl__carrousel" id="stlCarrousel">
+        </div>
+        <button class="stl__nav stl__nav--rechts" id="stlCarrouselVolgende" aria-label="Volgende">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- STL OVERLAY -->
+    <div class="stl-overlay" id="stlOverlay">
+      <div class="stl-overlay__content">
+        <button class="stl-overlay__sluit" id="stlSluit">✕</button>
+        <button class="stl-overlay__influencer-pijl stl-overlay__influencer-pijl--links" id="stlVorigeInfluencer">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <div class="stl-overlay__links">
+          <button class="stl-overlay__pijl stl-overlay__pijl--links" id="stlOverlayVorige">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+          </button>
+          <div class="stl-overlay__foto" id="stlOverlayFoto"></div>
+          <button class="stl-overlay__pijl stl-overlay__pijl--rechts" id="stlOverlayVolgende">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+          <div class="stl-overlay__naam" id="stlOverlayNaam"></div>
+          <div class="stl-overlay__bullets" id="stlOverlayBullets"></div>
+        </div>
+        <div class="stl-overlay__rechts">
+          <p class="stl-overlay__titel">Shop the look</p>
+          <div class="stl__producten" id="stlProducten"></div>
+        </div>
+        <button class="stl-overlay__influencer-pijl stl-overlay__influencer-pijl--rechts" id="stlVolgendInfluencer">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="stl-backdrop" id="stlBackdrop"></div>
+
+    <!-- FOTO LIGHTBOX -->
+    <div class="foto-overlay" id="fotoOverlay">
+      <div class="foto-overlay__header">
+        <p class="foto-overlay__titel" id="fotoOverlayTitel"></p>
+        <button class="foto-overlay__sluit" id="fotoOverlaySluit" aria-label="Sluiten">✕</button>
+      </div>
+      <div class="foto-overlay__foto-wrap">
+        <button class="foto-overlay__pijl foto-overlay__pijl--links" id="fotoOverlayVorige" aria-label="Vorige foto">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <img class="foto-overlay__img" id="fotoOverlayImg" src="" alt="" />
+        <button class="foto-overlay__pijl foto-overlay__pijl--rechts" id="fotoOverlayVolgende" aria-label="Volgende foto">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+        <div class="foto-overlay__bullets" id="fotoOverlayBullets"></div>
+      </div>
+    </div>
+    <div class="foto-backdrop" id="fotoBackdrop"></div>
+
+  </main>
+
+  <!-- FOOTER QUOTE -->
+  <div class="footer-quote">
+    <p class="footer-quote__text">Elk sieraad, één voor één met de hand gemaakt.</p>
+    <p class="footer-quote__sub">GRATIS VERZENDING VANAF €50,-</p>
+  </div>
+
+  <!-- FOOTER -->
+<footer class="footer">
+    <div class="footer__logo-row">
+        <img src="images/se-logo-white.png" alt="SOPHÉA" class="footer__logo-img" />
+    </div>
+
+    <div class="footer__top">
+        <div class="footer__col">
+        <p class="footer__col-title">CONTACT</p>
+        <p class="footer__contact-tekst">E-mail: info@sophea.nl</p>
+        <div class="footer__socials">
+            <a href="https://instagram.com/sophea.nl" target="_blank" class="footer__social-btn" aria-label="Instagram">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="2" width="20" height="20" rx="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+            </a>
+            <a href="https://www.tiktok.com/@sophea.nl" target="_blank" class="footer__social-btn" aria-label="TikTok">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M13 3v11.5a4 4 0 1 1-4-4c.35 0 .68.04 1 .1" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M13 3c.3 3 2.5 5.3 5.5 5.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M18.5 8.5v3.5" stroke-linecap="round"/>
+            </svg>
+            </a>
+        </div>
+        </div>
+
+        <div class="footer__col">
+        <p class="footer__col-title">KLANTENSERVICE</p>
+        <nav class="footer__col-links">
+            <a href="retourbeleid.html">Retourneren</a>
+            <a href="verzendbeleid.html">Verzendingen & bezorging</a>
+            <a href="faq.html">Veelgestelde vragen</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        </div>
+
+        <div class="footer__col">
+        <p class="footer__col-title">INFORMATIE</p>
+        <nav class="footer__col-links">
+            <a href="over-mij.html">Over SOPHÉA</a>
+            <a href="privacybeleid.html">Privacybeleid</a>
+            <a href="algemene-voorwaarden.html">Algemene voorwaarden</a>
+        </nav>
+        </div>
+
+        <div class="footer__col">
+        <p class="footer__col-title">BLIJF OP DE HOOGTE</p>
+        <nav class="footer__col-links">
+            <a href="nieuwsbrief.html">Meld je aan voor de nieuwsbrief</a>
+        </nav>
+        </div>
+    </div>
+    <div class="footer__betalen">
+        <p class="footer__betalen-label">BETALEN MET</p>
+        <div class="footer__betalen-icons">
+            <span class="pay-badge pay-badge--applepay">
+            <img src="images/apple-pay.svg" alt="Apple Pay" />
+            </span>
+            <span class="pay-badge pay-badge--googlepay">
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@master/assets/wallets/google-pay.svg" alt="Google Pay" />
+            </span>
+            <span class="pay-badge pay-badge--ideal">
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@master/assets/apm/ideal-wero.svg" alt="iDEAL / Wero" />
+            </span>
+            <span class="pay-badge pay-badge--maestro">
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@master/assets/cards/maestro.svg" alt="Maestro" />
+            </span>
+            <span class="pay-badge pay-badge--mastercard">
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@master/assets/cards/mastercard.svg" alt="Mastercard" />
+            </span>
+            <span class="pay-badge pay-badge--paypal">
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@master/assets/apm/paypal.svg" alt="PayPal" />
+            </span>
+            <span class="pay-badge pay-badge--shop">shop</span>
+            <span class="pay-badge pay-badge--visa">
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@master/assets/cards/visa.svg" alt="Visa" />
+            </span>
+            <span class="pay-badge pay-badge--klarna">Klarna.</span>
+            <span class="pay-badge pay-badge--amex">
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@master/assets/cards/american-express.svg" alt="American Express" />
+            </span>
+            <span class="pay-badge pay-badge--unionpay">
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@master/assets/cards/unionpay.svg" alt="UnionPay" />
+            </span>
+        </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© SOPHÉA 2026 · KVK 42118672 · BTW NL005508619B75</p>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Terug naar boven">↑</button>
+  <script src="js/shopify.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/account.js"></script>
+  <script src="js/product.js"></script>
+</body>
+</html>

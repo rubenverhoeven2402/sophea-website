@@ -1,0 +1,486 @@
+/* SHOP THE LOOK */
+.stl {
+  padding: 5rem 0;
+  background: var(--clr-bg);
+  overflow: hidden;
+}
+
+.stl__intro {
+  text-align: left;
+  margin-bottom: 2rem;
+  padding: 0 2.5%;
+}
+
+.stl__titel {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 300;
+  font-style: italic;
+}
+
+/* CARROUSEL — grote vaste doosjes die glijden (translateX). Doordat de
+   items groot zijn passen er van nature maar ~2 volledig + 2 half zichtbaar
+   naast het actieve item, precies zoals bedoeld. */
+.stl__carrousel-wrapper {
+  position: relative;
+  padding: 0 4.5rem;
+  overflow: hidden;
+  /* Vaste hoogte (2:3 staand × de grootste mogelijke breedte) zodat de rij
+     nooit in hoogte "ademt" terwijl een item van grootte wisselt — dat gaf
+     eerder een kort, ongewenst op-en-neer schuiven van het hele beeld. */
+  height: min(830px, 39vw);
+}
+
+.stl__carrousel {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 1.25rem;
+  will-change: transform;
+}
+
+.stl__item {
+  flex: 0 0 min(520px, 25vw);
+  cursor: pointer;
+  transform: scale(0.95);
+  transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.stl__item--actief {
+  transform: scale(1.05);
+}
+
+.stl__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--clr-bg);
+  border: 1px solid var(--clr-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--clr-text);
+  transition: background 0.2s;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.stl__nav:hover {
+  background: var(--clr-border);
+}
+
+.stl__nav--links {
+  left: 0.75rem;
+}
+
+.stl__nav--rechts {
+  right: 0.75rem;
+}
+
+@media (max-width: 900px) {
+  .stl {
+    padding: 2.5rem 0 4rem;
+  }
+
+  /* Op de productpagina staat .stl altijd na .product binnen dezelfde
+     <main> — dit target 'm dus alleen daar, niet op de homepage. */
+  .product ~ .stl {
+    padding-top: 0;
+  }
+  .stl__intro {
+    margin-bottom: 1.25rem;
+  }
+  .stl__item {
+    flex: 0 0 min(270px, 62vw);
+  }
+  .stl__nav {
+    width: 34px;
+    height: 34px;
+  }
+  .stl__carrousel-wrapper {
+    padding: 0 0.75rem;
+    height: min(480px, 105vw);
+  }
+}
+
+.stl__item-foto {
+  position: relative;
+  aspect-ratio: 2/3;
+  overflow: hidden;
+}
+
+.stl__item-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.stl__item:hover .stl__item-foto img {
+  transform: scale(1.04);
+}
+
+.stl__foto-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--clr-border);
+  transition: transform 0.4s ease;
+}
+
+.stl__item:hover .stl__foto-placeholder {
+  transform: scale(1.04);
+}
+
+.stl__item-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem 1rem 0.75rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 300;
+}
+
+.stl__item-icon {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* OVERLAY */
+.stl-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  padding: 2rem;
+}
+
+.stl-overlay.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.stl-overlay__content {
+  background: var(--clr-bg);
+  display: grid;
+  grid-template-columns: auto 1fr 1fr auto;
+  max-width: 960px;
+  width: 100%;
+  /* Vaste hoogte i.p.v. alleen max-height — anders bepaalt de natuurlijke
+     afmeting van de huidige foto de hoogte van de hele overlay, en
+     "springt" alles van grootte zodra je naar een foto met een andere
+     beeldverhouding swipet. */
+  height: min(620px, 90vh);
+  max-height: 90vh;
+  overflow: hidden;
+  position: relative;
+  align-items: stretch;
+}
+
+.stl-overlay__sluit {
+  position: absolute;
+  top: 1rem;
+  right: 4rem;
+  z-index: 10;
+  background: #fff;
+  border: none;
+  width: 36px;
+  height: 36px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.stl-overlay__sluit:hover {
+  background: var(--clr-border);
+}
+
+/* INFLUENCER PIJLEN — buitenste pijlen */
+.stl-overlay__influencer-pijl {
+  background: var(--clr-bg);
+  border: none;
+  width: 48px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--clr-text);
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .stl-overlay__influencer-pijl:hover {
+    background: var(--clr-border);
+  }
+}
+
+/* FOTO SECTIE LINKS */
+.stl-overlay__links {
+  position: relative;
+  min-height: 500px;
+}
+
+.stl-overlay__foto {
+  width: 100%;
+  height: 100%;
+}
+
+.stl-overlay__foto img,
+.stl-overlay__foto .stl__foto-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* FOTO PIJLEN — binnenste pijlen */
+.stl-overlay__pijl {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 34px;
+  height: 34px;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: background 0.2s;
+}
+
+.stl-overlay__pijl:hover {
+  background: #fff;
+}
+
+.stl-overlay__pijl--links { left: 0.75rem; }
+.stl-overlay__pijl--rechts { right: 0.75rem; }
+
+.stl-overlay__naam {
+  position: absolute;
+  bottom: 1em;
+  left: 1rem;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+}
+
+.stl-overlay__bullets {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.4rem;
+}
+
+.stl__bullet {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: background 0.2s;
+  border: none;
+}
+
+.stl__bullet--actief {
+  background: #fff;
+}
+
+/* PRODUCTEN SECTIE RECHTS */
+.stl-overlay__rechts {
+  padding: 2rem;
+  overflow-y: auto;
+  border-left: 1px solid var(--clr-border);
+}
+
+.stl-overlay__titel {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 300;
+  font-style: italic;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--clr-border);
+  margin-bottom: 1rem;
+}
+
+.stl__producten {
+  display: flex;
+  flex-direction: column;
+}
+
+.stl__product {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.stl__product-img {
+  width: 80px;
+  height: 80px;
+  background: var(--clr-border);
+  flex-shrink: 0;
+}
+
+.stl__product-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.stl__product-naam {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  font-weight: 300;
+  margin-bottom: 0.25rem;
+}
+
+.stl__product-prijs {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--clr-gold);
+}
+
+.stl__product-btn {
+  display: inline-block;
+  padding: 0.6rem 1.25rem;
+  background: var(--clr-text);
+  color: var(--clr-bg);
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.stl__product-btn:hover {
+  background: var(--clr-gold);
+  color: var(--clr-text);
+}
+
+/* Lege staat — getoond als er nog geen product gekoppeld is (bv. nog niet in Shopify) */
+.stl__product-leeg {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 300;
+  opacity: 0.55;
+  padding: 1rem 0;
+}
+
+/* BACKDROP */
+.stl-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 499;
+  background: rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.stl-backdrop.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+@media (max-width: 900px) {
+  .stl-overlay {
+    padding: 0;
+  }
+
+  .stl-overlay__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "foto foto"
+      "producten producten";
+    max-width: 100%;
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 52px;
+  }
+
+  .stl-overlay__influencer-pijl {
+    display: flex;
+    width: 50%;
+    height: 52px;
+    border-top: 1px solid var(--clr-border);
+    flex-shrink: 0;
+    position: fixed;
+    bottom: 0;
+    background: var(--clr-bg);
+    z-index: 20;
+  }
+
+  .stl-overlay__influencer-pijl--links {
+    left: 0;
+    border-right: 1px solid var(--clr-border);
+  }
+
+  .stl-overlay__influencer-pijl--rechts {
+    right: 0;
+  }
+
+  .stl-overlay__links {
+    grid-area: foto;
+    position: relative;
+    min-height: 0;
+    height: 75vh;
+    width: 100% !important;
+    justify-self: stretch;
+  }
+
+  .stl-overlay__rechts {
+    grid-area: producten;
+    border-left: none;
+    border-top: 1px solid var(--clr-border);
+    padding: 1.25rem 1.5rem 2rem;
+    overflow-y: visible;
+  }
+
+  .stl-overlay__sluit {
+    right: 1rem;
+  }
+}

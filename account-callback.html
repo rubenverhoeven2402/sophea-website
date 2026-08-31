@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inloggen... - SOPHÉA</title>
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="icon" type="image/png" href="images/fav-icon-goud.png" />
+  <style>
+    .callback-scherm {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      gap: 1rem;
+    }
+    .callback-scherm__titel {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      color: var(--clr-text);
+    }
+    .callback-scherm__tekst {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      color: var(--clr-text);
+      opacity: 0.7;
+      max-width: 400px;
+    }
+    .callback-scherm__link {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      color: var(--clr-gold);
+      text-decoration: underline;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <a href="index.html" class="nav__logo">
+      <img src="images/sophea.png" alt="SOPHÉA logo" />
+    </a>
+  </header>
+
+  <main>
+    <div class="callback-scherm" id="callbackScherm">
+      <p class="callback-scherm__titel">Je wordt ingelogd...</p>
+      <p class="callback-scherm__tekst">Een ogenblik geduld, we ronden het inloggen af.</p>
+    </div>
+  </main>
+
+  <script src="js/account.js"></script>
+  <script>
+    (async function () {
+      const scherm = document.getElementById('callbackScherm');
+
+      function toonFout(bericht) {
+        scherm.innerHTML = `
+          <p class="callback-scherm__titel">Er ging iets mis</p>
+          <p class="callback-scherm__tekst">${bericht}</p>
+          <a href="index.html" class="callback-scherm__link">← Terug naar de homepage</a>
+        `;
+      }
+
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get('code');
+      const state = params.get('state');
+      const fout = params.get('error');
+
+      if (fout) {
+        toonFout('Het inloggen is geannuleerd of mislukt bij Shopify.');
+        return;
+      }
+
+      if (!code || !state) {
+        toonFout('Deze pagina hoort alleen bezocht te worden na het inloggen — er ontbreken gegevens.');
+        return;
+      }
+
+      // De state moet exact overeenkomen met wat we bij het starten van de
+      // login-poging hebben bewaard — dat voorkomt dat iemand anders een
+      // vervalste inlogpoging naar jouw account stuurt (CSRF-bescherming).
+      const bewaardeState = sessionStorage.getItem('sophea-account-state');
+      const codeVerifier = sessionStorage.getItem('sophea-account-code-verifier');
+
+      if (!bewaardeState || state !== bewaardeState || !codeVerifier) {
+        toonFout('De inlogpoging kon niet worden geverifieerd. Probeer het opnieuw.');
+        return;
+      }
+
+      try {
+        const res = await fetch(SOPHEA_ACCOUNT_CONFIG.tokenEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            grant_type: 'authorization_code',
+            client_id: SOPHEA_ACCOUNT_CONFIG.clientId,
+            redirect_uri: SOPHEA_ACCOUNT_CONFIG.redirectUri,
+            code,
+            code_verifier: codeVerifier,
+          }),
+        });
+
+        if (!res.ok) {
+          throw new Error('Token-aanvraag mislukt (' + res.status + ')');
+        }
+
+        const data = await res.json();
+        sopheaBewaarTokens(data);
+
+        // Opgeruimd — deze tijdelijke gegevens zijn nu niet meer nodig.
+        sessionStorage.removeItem('sophea-account-state');
+        sessionStorage.removeItem('sophea-account-code-verifier');
+
+        window.location.href = 'account.html';
+      } catch (err) {
+        console.error(err);
+        toonFout('Het omwisselen van de inloggegevens is niet gelukt. Probeer het opnieuw.');
+      }
+    })();
+  </script>
+</body>
+</html>

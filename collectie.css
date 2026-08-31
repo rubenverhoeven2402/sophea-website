@@ -1,0 +1,864 @@
+/* =============================================
+   SOPHÉA — collectie.css
+   ============================================= */
+
+/* HERO */
+.collectie-hero {
+  margin-top: 0;
+  padding: 3rem 3rem 3.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--clr-border);
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--clr-border);
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+/* Zachte donkere gradient onderin, zodat de witte titel altijd leesbaar
+   blijft ongeacht hoe licht dat stuk van de hero-foto is. */
+.collectie-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+/* Ondoorzichtige beige laag met shimmer-gradient die de foto verbergt tijdens het laden */
+.collectie-hero--laden::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: linear-gradient(100deg, #f0ebe0 35%, #fdfbf6 50%, #f0ebe0 65%);
+  background-size: 200% 100%;
+  animation-name: heroShimmerSweep;
+  animation-duration: 1000ms;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+/* Bereik zo gekozen dat de volledige animatieduur exact overeenkomt met
+   de doorkruising van de linkerrand tot de rechterrand — geen "dode tijd" */
+@keyframes heroShimmerSweep {
+  0% { background-position: 110% 0; }
+  100% { background-position: -10% 0; }
+}
+
+.collectie-hero__eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.85);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  position: relative;
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.collectie-hero__title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 400;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.collectie-hero__divider {
+  display: none;
+}
+
+/* FILTER BAR */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 4rem;
+  border-bottom: 1px solid var(--clr-border);
+  background: var(--clr-bg);
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 50;
+}
+
+.filter-bar__left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.filter-bar__right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.filter-bar__label {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  color: var(--clr-text);
+  opacity: 0.5;
+}
+
+/* FILTER OPEN KNOP */
+.filter-open-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: 1px solid var(--clr-border);
+  padding: 0.5rem 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  color: var(--clr-text);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.filter-open-btn:hover {
+  border-color: var(--clr-text);
+}
+
+.sort-select {
+  appearance: none;
+  background: transparent;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 300;
+  color: var(--clr-text);
+  cursor: pointer;
+  padding-right: 1rem;
+}
+
+/* FILTER OVERLAY */
+.filter-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 300;
+  width: 320px;
+  max-width: 85vw;
+  background: var(--clr-bg);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  pointer-events: none;
+  transition: transform 0.4s ease;
+  overflow-y: auto;
+  border-right: 1px solid var(--clr-border);
+}
+
+.filter-overlay.is-open {
+  transform: translateX(0);
+  pointer-events: all;
+}
+
+.filter-overlay__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+  border-bottom: 1px solid var(--clr-border);
+  flex-shrink: 0;
+}
+
+.filter-overlay__titel {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  color: var(--clr-text);
+}
+
+.filter-overlay__sluit {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--clr-text);
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.filter-overlay__sluit:hover {
+  opacity: 1;
+}
+
+.filter-overlay__groep {
+  padding: 1.75rem 2rem;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.filter-overlay__label {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--clr-gold);
+  margin-bottom: 1rem;
+}
+
+.filter-overlay__opties {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-optie {
+  background: none;
+  border: none;
+  text-align: left;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--clr-text);
+  padding: 0.35rem 0;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.filter-optie:hover {
+  opacity: 0.8;
+}
+
+.filter-optie--active {
+  opacity: 1;
+  font-weight: 400;
+}
+
+.filter-optie--active::before {
+  content: '✓ ';
+  color: var(--clr-gold);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+}
+
+.filter-overlay__footer {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.filter-overlay__toepassen {
+  padding: 1rem;
+  background: var(--clr-text);
+  color: var(--clr-bg);
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.filter-overlay__toepassen:hover {
+  background: var(--clr-gold);
+  color: var(--clr-text);
+}
+
+.filter-overlay__reset {
+  padding: 0.75rem;
+  background: none;
+  border: 1px solid var(--clr-border);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--clr-text);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.filter-overlay__reset:hover {
+  border-color: var(--clr-text);
+}
+
+/* BACKDROP */
+.filter-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 299;
+  background: rgba(0,0,0,0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.filter-backdrop.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* PRODUCT GRID */
+.grid-sectie {
+  padding: 2.5rem 4rem 4rem;
+  background: var(--clr-bg);
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 2rem;
+  row-gap: 3rem;
+}
+
+/* PRODUCT CARD */
+.product-card {
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.product-card__body {
+  padding: 1rem 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  text-align: center;
+}
+
+.product-card__img-wrap {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: var(--clr-border);
+}
+
+.product-card__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-card__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem 1rem 0.85rem;
+  background: linear-gradient(to top, rgba(50,21,30,0.75) 0%, transparent 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.product-card__naam {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--clr-text);
+}
+
+.product-card__prijs {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--clr-text);
+  opacity: 0.7;
+}
+
+.product-card__prijs--uitverkocht {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--clr-text);
+  opacity: 0.45;
+}
+
+.product-card__badges {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+
+.product-card__badge {
+  padding: 0.25rem 0.6rem;
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  border-radius: 999px;
+}
+
+.product-card__badge--bestseller {
+  background: var(--clr-gold);
+  color: var(--clr-text);
+}
+
+.product-card__badge--nieuw {
+  background: var(--clr-text);
+  color: var(--clr-bg);
+}
+
+.product-card__badge--laatste-items {
+  background: var(--clr-text);
+  color: var(--clr-bg);
+}
+
+.product-card__foto-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--clr-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--clr-text);
+  opacity: 0.3;
+}
+
+/* SKELETON LOADING STATE */
+.product-card--skeleton {
+  pointer-events: none;
+}
+
+.skeleton-shimmer {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: linear-gradient(
+    100deg,
+    var(--clr-border) 30%,
+    rgba(255, 255, 255, 0.55) 50%,
+    var(--clr-border) 70%
+  );
+  background-size: 250% 100%;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes skeletonShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -50% 0; }
+}
+
+/* PAGINERING */
+.grid-sectie__paginering {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 3.5rem;
+}
+
+.paginering__pagina {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--clr-text);
+  opacity: 0.55;
+  cursor: pointer;
+  transition: opacity 0.2s, border-color 0.2s;
+}
+
+.paginering__pagina:hover {
+  opacity: 1;
+}
+
+.paginering__pagina--actief {
+  opacity: 1;
+  border-color: var(--clr-text);
+}
+
+.paginering__volgende {
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--clr-text);
+  opacity: 0.7;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  transition: opacity 0.2s;
+}
+
+.paginering__volgende:hover {
+  opacity: 1;
+}
+
+/* SORT DROPDOWN */
+.sort-wrapper {
+  position: relative;
+}
+
+.sort-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  color: var(--clr-text);
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.sort-btn:hover {
+  opacity: 1;
+}
+
+.sort-btn svg {
+  transition: transform 0.2s;
+}
+
+.sort-btn.is-open svg {
+  transform: rotate(180deg);
+}
+
+.sort-dropdown {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  background: var(--clr-bg);
+  border: 1px solid var(--clr-border);
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 100;
+}
+
+.sort-dropdown.is-open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.sort-dropdown__titel {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--clr-gold);
+  padding: 1.25rem 1.5rem 0.75rem;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.sort-optie {
+  background: none;
+  border: none;
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--clr-text);
+  padding: 0.85rem 1.5rem;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s, background 0.2s;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.sort-optie:last-child {
+  border-bottom: none;
+}
+
+.sort-optie:hover {
+  opacity: 1;
+  background: var(--clr-card);
+}
+
+.sort-optie--active {
+  opacity: 1;
+  font-weight: 400;
+  color: var(--clr-gold);
+}
+
+/* KLEUR DOTS */
+.kleur-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: inline-block;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.kleur-dot--all {
+  background: conic-gradient(#1f8f85, #c4607e, #6b9fd4, #f5f3ef, #0f1829, #1f8f85);
+}
+
+.kleur-check {
+  margin-left: auto;
+  color: var(--clr-gold);
+  font-size: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.filter-optie {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.filter-optie--active .kleur-check {
+  opacity: 1;
+}
+
+/* CHECKBOX-VIERKANTJE voor categorie/collectie/prijs filteropties —
+   maakt visueel duidelijk dat het klikbare aanvinkopties zijn. */
+.filter-checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--clr-text);
+  flex-shrink: 0;
+}
+
+.filter-optie--active .filter-checkbox {
+  background: #000;
+  border-color: #000;
+}
+
+/* Standaard ✓-vinkje van .filter-optie--active::before uitzetten voor
+   categorie/collectie/kleur — die gebruiken al het zwarte vierkantje
+   hierboven als actief-indicator, dus geen dubbel vinkje nodig. */
+.filter-optie[data-type="categorie"].filter-optie--active::before,
+.filter-optie[data-type="collectie"].filter-optie--active::before,
+.filter-optie[data-type="kleur"].filter-optie--active::before {
+  content: none;
+}
+
+/* PRIJS SLIDER — dual-range, met een actieve balk tussen de twee handvatten */
+.prijs-slider {
+  position: relative;
+  height: 20px;
+  margin: 0.5rem 0 1.5rem;
+}
+
+.prijs-slider__track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--clr-border);
+  transform: translateY(-50%);
+}
+
+.prijs-slider__track-actief {
+  position: absolute;
+  top: 50%;
+  height: 2px;
+  background: var(--clr-text);
+  transform: translateY(-50%);
+}
+
+.prijs-slider__range {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+  margin: 0;
+}
+
+.prijs-slider__range::-webkit-slider-runnable-track {
+  background: transparent;
+  height: 2px;
+}
+
+.prijs-slider__range::-moz-range-track {
+  background: transparent;
+  height: 2px;
+}
+
+.prijs-slider__range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: all;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--clr-text);
+  border: 2px solid var(--clr-bg);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  cursor: pointer;
+}
+
+.prijs-slider__range::-moz-range-thumb {
+  pointer-events: all;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--clr-text);
+  border: 2px solid var(--clr-bg);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  cursor: pointer;
+}
+
+.prijs-slider__inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.prijs-slider__input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--clr-border);
+  padding: 0.55rem 0.75rem;
+  flex: 1;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--clr-text);
+}
+
+.prijs-slider__input-wrap span:first-child {
+  opacity: 0.5;
+}
+
+.prijs-slider__input {
+  border: none;
+  background: none;
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--clr-text);
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.prijs-slider__input::-webkit-outer-spin-button,
+.prijs-slider__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.prijs-slider__input:focus {
+  outline: none;
+}
+
+.prijs-slider__streep {
+  opacity: 0.4;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+}
+
+/* LEGE STAAT — als filters geen enkel product opleveren */
+.grid-leeg {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--clr-text);
+  opacity: 0.6;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 1.5rem;
+    row-gap: 3rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .filter-bar {
+    padding: 1rem 2rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .grid-sectie {
+    padding: 2rem 2rem 3rem;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 8px;
+    row-gap: 2.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .collectie-hero {
+    padding: 2.5rem 1rem 1.5rem;
+    min-height: 230px;
+  }
+
+  .filter-bar {
+    padding: 1rem 1rem;
+  }
+
+  .filter-open-btn {
+    padding: 0.26rem 0.5rem;
+    font-size: 0.5rem;
+  }
+
+  .sort-btn {
+    font-size: 0.6rem !important;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 8px;
+    row-gap: 2.5rem;
+  }
+
+  .grid-sectie {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .product-card__naam {
+    font-size: 0.7rem;
+  }
+
+  .product-card__prijs {
+    font-size: 0.72rem;
+  }
+}

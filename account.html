@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mijn account - SOPHÉA</title>
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/account.css" />
+  <link rel="icon" type="image/png" href="images/fav-icon-goud.png" />
+</head>
+<body>
+    <div class="sale-balk">
+        <p class="sale-balk__vol"> Gratis verzending op bestellingen vanaf <strong>€50</strong></p>
+        <p class="sale-balk__kort">Gratis verzending op bestellingen vanaf <strong>€50</strong></p>
+    </div>
+    <header class="nav">
+    <div class="nav__links">
+      <button class="nav__hamburger" id="hamburgerBtn" aria-label="Menu openen">
+        <span></span><span></span><span></span>
+      </button>
+      <button class="nav__search" aria-label="Zoeken">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+      </button>
+    </div>
+    <a href="index.html" class="nav__logo">
+      <img src="images/sophea.png" alt="SOPHÉA logo" />
+    </a>
+    <div class="nav__rechts">
+    <button class="nav__account" id="accountBtn" aria-label="Account">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="7.5" r="4.5"/>
+          <path d="M3.5 20.5c0-4.7 3.8-8.5 8.5-8.5s8.5 3.8 8.5 8.5"/>
+        </svg>
+    </button>
+    <button class="nav__cart" aria-label="Winkelwagen">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+    </svg>
+    <span class="nav__cart-badge" id="cartBadge" style="display:none;">0</span>
+    </button>
+    </div>
+  </header>
+
+  <!-- HAMBURGER DROPDOWN -->
+    <div class="nav-overlay" id="navOverlay">
+    <div class="nav-overlay__sluit-wrapper">
+        <button class="nav-overlay__sluit" id="sluitBtn" aria-label="Menu sluiten">✕</button>
+    </div>
+    <nav class="nav-overlay__links">
+        <a href="index.html">Home</a>
+        <button class="nav-overlay__link-pijl" id="collectieBtn">
+        Shop
+        <span class="nav-overlay__pijl">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+            </svg>
+        </span>
+        </button>
+        <a href="collectie.html?categorie=handchains">Hand chains</a>
+        <a href="collectie.html?categorie=kettingen">Kettingen</a>
+        <a href="collectie.html?categorie=oorbellen">Oorbellen</a>
+        <a href="collectie.html?categorie=sets">Sets</a>
+    </nav>
+    <div class="nav-submenu" id="collectieSubmenu">
+        <button class="nav-submenu__terug" id="submenuTerug">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        Terug
+        </button>
+        <p class="nav-submenu__titel">Shop</p>
+        <div class="nav-submenu__groep">
+        <p class="nav-submenu__label">SHOP</p>
+        <a href="collectie.html">Alles</a>
+        <a href="collectie.html?categorie=nieuw">Nieuw</a>
+        <a href="collectie.html?categorie=bestsellers">Bestsellers</a>
+        </div>
+        <div class="nav-submenu__groep">
+        <p class="nav-submenu__label">COLLECTIES</p>
+        </div>
+    </div>
+    <div class="nav-overlay__bottom">
+        <p class="nav-overlay__col-title">INFO</p>
+        <div class="nav-overlay__col-links">
+            <a href="faq.html">Veelgestelde vragen</a>
+            <a href="contact.html">Contact</a>
+            <a href="over-mij.html">Over SOPHÉA</a>
+        </div>
+        <div style="margin-top: 1.5rem;">
+            <p class="nav-overlay__col-title">VOLG ONS</p>
+            <div class="nav-overlay__col-links nav-overlay__col-links--socials">
+              <a href="https://instagram.com/sophea.nl" target="_blank">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="2" y="2" width="20" height="20" rx="5"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                </svg>
+                @sophea.nl
+              </a>
+              <a href="https://www.tiktok.com/@sophea.nl" target="_blank">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M13 3v11.5a4 4 0 1 1-4-4c.35 0 .68.04 1 .1" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M13 3c.3 3 2.5 5.3 5.5 5.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M18.5 8.5v3.5" stroke-linecap="round"/>
+                </svg>
+                @sophea.nl
+              </a>
+            </div>
+        </div>
+        </div>
+        <p class="nav-overlay__tagline-bottom">Handmade Jewellery · 't Gooi</p>
+    </div>
+  </div>
+
+    <!-- ZOEK OVERLAY -->
+    <div class="zoek-overlay" id="zoekOverlay">
+    <div class="zoek-overlay__header">
+        <div class="zoek-overlay__balk">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" id="zoekInput" class="zoek-overlay__input" placeholder="Zoek naar een sieraad..." />
+        <button class="zoek-overlay__wis" id="zoekWis">✕</button>
+        </div>
+        <button class="zoek-overlay__sluit" id="zoekSluit">Sluiten</button>
+    </div>
+    <div class="zoek-overlay__inhoud">
+        <div class="zoek-overlay__leeg" id="zoekLeeg">
+        <p class="zoek-overlay__eyebrow">POPULAIR</p>
+        <div class="zoek-overlay__grid" id="zoekPopulair"></div>
+        </div>
+        <div class="zoek-overlay__gevonden" id="zoekGevonden" style="display:none;">
+        <p class="zoek-overlay__label" id="zoekLabel"></p>
+        <div class="zoek-overlay__grid" id="zoekGrid"></div>
+        </div>
+        <div class="zoek-overlay__niets" id="zoekNiets" style="display:none;">
+        <p class="zoek-overlay__niets-tekst">Geen resultaten voor "<span id="zoekNietsTerm"></span>"</p>
+        <p class="zoek-overlay__niets-sub">Probeer een andere zoekterm.</p>
+        </div>
+    </div>
+    </div>
+    <div class="zoek-backdrop" id="zoekBackdrop"></div>
+
+    <!-- WINKELWAGEN OVERLAY -->
+    <div class="cart-overlay" id="cartOverlay">
+    <div class="cart-overlay__header">
+        <p class="cart-overlay__titel">Winkelwagen</p>
+        <button class="cart-overlay__sluit" id="cartSluit">✕</button>
+    </div>
+    <div class="cart-overlay__verzend-balk" id="cartVerzendBalk" style="display:none;">
+        <p class="cart-overlay__verzend-tekst" id="cartVerzendTekst"></p>
+        <div class="cart-overlay__progress">
+        <div class="cart-overlay__progress-bar" id="cartProgressBar"></div>
+        </div>
+    </div>
+    <div class="cart-overlay__items" id="cartItems"></div>
+    <div class="cart-overlay__leeg" id="cartLeeg" style="display:none;">
+        <p class="cart-overlay__leeg-tekst">Je winkelwagen is leeg.</p>
+        <a href="collectie.html" class="cart-overlay__leeg-btn">BEKIJK DE COLLECTIE →</a>
+    </div>
+    <div class="cart-overlay__footer" id="cartFooter" style="display:none;">
+        <div class="cart-overlay__regel">
+        <span>Subtotaal</span>
+        <span id="cartSubtotaal">€ 0,00</span>
+        </div>
+        <div class="cart-overlay__regel">
+        <span>Verzending</span>
+        <span id="cartVerzending">Gratis</span>
+        </div>
+        <div class="cart-overlay__regel cart-overlay__regel--totaal">
+        <span>Totaal</span>
+        <span id="cartTotaal">€ 0,00</span>
+        </div>
+        <div class="cart-overlay__verzend-info">
+        <p>✓ Gratis verzending vanaf €50,-</p>
+        <p>✓ Binnen 3-5 werkdagen in huis</p>
+        </div>
+        <button class="cart-overlay__afrekenen" id="cartAfrekenen">AFREKENEN</button>
+        <a href="collectie.html" class="cart-overlay__verder">← Verder winkelen</a>
+    </div>
+    </div>
+    <div class="cart-backdrop" id="cartBackdrop"></div>
+
+  <main>
+
+    <!-- ACCOUNT -->
+    <section class="account">
+
+      <div class="account__zijbalk">
+        <p class="account__welkom" id="accountWelkom">Mijn account</p>
+        <nav class="account__tabs">
+          <button class="account__tab account__tab--actief" data-tab="profiel">Profiel</button>
+          <button class="account__tab" data-tab="bestellingen">Bestellingen</button>
+          <button class="account__tab" data-tab="wishlist">Wishlist</button>
+        </nav>
+        <button class="account__inloggen" id="accountInloggenBtn" style="display:none;">Inloggen</button>
+        <button class="account__uitloggen" id="accountUitloggenBtn" style="display:none;">Uitloggen</button>
+      </div>
+
+      <div class="account__inhoud">
+
+        <!-- PROFIEL — vereist inloggen -->
+        <div class="account__paneel account__paneel--actief" id="paneelProfiel">
+          <h2 class="account__paneel-titel">Profiel</h2>
+          <div class="account__profiel-velden" id="profielVelden">
+            <p class="account__laden">Profiel wordt geladen...</p>
+          </div>
+        </div>
+
+        <!-- BESTELLINGEN — vereist inloggen -->
+        <div class="account__paneel" id="paneelBestellingen">
+          <h2 class="account__paneel-titel">Bestellingen</h2>
+          <div class="account__orders" id="ordersLijst">
+            <p class="account__laden">Bestellingen worden geladen...</p>
+          </div>
+        </div>
+
+        <!-- WISHLIST — werkt altijd, ook zonder inloggen -->
+        <div class="account__paneel" id="paneelWishlist">
+          <h2 class="account__paneel-titel">Wishlist</h2>
+          <div class="account__wishlist-grid" id="wishlistGrid">
+            <p class="account__laden">Wishlist wordt geladen...</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer__logo-row">
+        <img src="images/se-logo-white.png" alt="SOPHÉA" class="footer__logo-img" />
+    </div>
+
+    <div class="footer__top">
+        <div class="footer__col">
+        <p class="footer__col-title">CONTACT</p>
+        <p class="footer__contact-tekst">E-mail: info@sophea.nl</p>
+        <div class="footer__socials">
+            <a href="https://instagram.com/sophea.nl" target="_blank" class="footer__social-btn" aria-label="Instagram">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="2" width="20" height="20" rx="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+            </a>
+            <a href="https://www.tiktok.com/@sophea.nl" target="_blank" class="footer__social-btn" aria-label="TikTok">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M13 3v11.5a4 4 0 1 1-4-4c.35 0 .68.04 1 .1" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M13 3c.3 3 2.5 5.3 5.5 5.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M18.5 8.5v3.5" stroke-linecap="round"/>
+            </svg>
+            </a>
+        </div>
+        </div>
+
+        <div class="footer__col">
+        <p class="footer__col-title">KLANTENSERVICE</p>
+        <nav class="footer__col-links">
+            <a href="retourbeleid.html">Retourneren</a>
+            <a href="verzendbeleid.html">Verzendingen & bezorging</a>
+            <a href="faq.html">Veelgestelde vragen</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        </div>
+
+        <div class="footer__col">
+        <p class="footer__col-title">INFORMATIE</p>
+        <nav class="footer__col-links">
+            <a href="over-mij.html">Over SOPHÉA</a>
+            <a href="privacybeleid.html">Privacybeleid</a>
+            <a href="algemene-voorwaarden.html">Algemene voorwaarden</a>
+        </nav>
+        </div>
+
+        <div class="footer__col">
+        <p class="footer__col-title">BLIJF OP DE HOOGTE</p>
+        <nav class="footer__col-links">
+            <a href="nieuwsbrief.html">Meld je aan voor de nieuwsbrief</a>
+        </nav>
+        </div>
+    </div>
+    <div class="footer__betalen">
+        <p class="footer__betalen-label">BETALEN MET</p>
+        <div class="footer__betalen-icons">
+            <span class="pay-badge pay-badge--applepay">
+            <img src="images/apple-pay.svg" alt="Apple Pay" />
+            </span>
+            <span class="pay-badge pay-badge--googlepay">
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@master/assets/wallets/google-pay.svg" alt="Google Pay" />
+            </span>
+            <span class="pay-badge pay-badge--ideal">
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@master/assets/apm/ideal-wero.svg" alt="iDEAL / Wero" />
+            </span>
+            <span class="pay-badge pay-badge--maestro">
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@master/assets/cards/maestro.svg" alt="Maestro" />
+            </span>
+            <span class="pay-badge pay-badge--mastercard">
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@master/assets/cards/mastercard.svg" alt="Mastercard" />
+            </span>
+            <span class="pay-badge pay-badge--paypal">
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@master/assets/apm/paypal.svg" alt="PayPal" />
+            </span>
+            <span class="pay-badge pay-badge--shop">shop</span>
+            <span class="pay-badge pay-badge--visa">
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@master/assets/cards/visa.svg" alt="Visa" />
+            </span>
+            <span class="pay-badge pay-badge--klarna">Klarna.</span>
+            <span class="pay-badge pay-badge--amex">
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@master/assets/cards/american-express.svg" alt="American Express" />
+            </span>
+            <span class="pay-badge pay-badge--unionpay">
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos@master/assets/cards/unionpay.svg" alt="UnionPay" />
+            </span>
+        </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© SOPHÉA 2026 · KVK 42118672 · BTW NL005508619B75</p>
+    </div>
+  </footer>
+
+  <script src="js/shopify.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/account.js"></script>
+  <script src="js/account-page.js"></script>
+</body>
+</html>

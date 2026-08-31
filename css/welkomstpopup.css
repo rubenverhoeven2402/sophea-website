@@ -1,0 +1,155 @@
+.welkomst-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  z-index: 500;
+  width: 520px;
+  max-width: 92vw;
+  background: var(--clr-bg);
+  padding: 3.5rem 3rem;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.welkomst-popup__logo {
+  height: 32px;
+  width: auto;
+  margin: 0 auto 1.5rem;
+}
+
+.welkomst-popup.is-open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.welkomst-popup__sluit {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--clr-text);
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.welkomst-popup__sluit:hover {
+  opacity: 1;
+}
+
+.welkomst-popup__eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--clr-gold);
+  margin-bottom: 0.75rem;
+}
+
+.welkomst-popup__titel {
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  font-weight: 300;
+  margin-bottom: 0.75rem;
+  line-height: 1.25;
+}
+
+.welkomst-popup__sub {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 300;
+  opacity: 0.7;
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+}
+
+.welkomst-popup__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.welkomst-popup__input {
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--clr-border);
+  background: var(--clr-card);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.welkomst-popup__input:focus {
+  border-color: var(--clr-gold);
+}
+
+.welkomst-popup__submit {
+  padding: 0.9rem;
+  background: var(--clr-text);
+  color: var(--clr-bg);
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.welkomst-popup__submit:hover {
+  background: var(--clr-gold);
+  color: var(--clr-text);
+}
+
+.welkomst-popup__nee {
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  opacity: 0.45;
+  cursor: pointer;
+}
+
+.welkomst-popup__nee:hover {
+  opacity: 0.8;
+}
+
+.welkomst-popup__code-label {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin-bottom: 0.5rem;
+}
+
+.welkomst-popup__code {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  color: var(--clr-gold);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.75rem;
+}
+
+.welkomst-popup__code-sub {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  opacity: 0.6;
+  line-height: 1.6;
+}
+
+.welkomst-popup-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 499;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.welkomst-popup-backdrop.is-open {
+  opacity: 1;
+  pointer-events: all;
+}

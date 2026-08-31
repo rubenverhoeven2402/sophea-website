@@ -1,0 +1,1189 @@
+/* =============================================
+   SOPHÉA — product.css
+   ============================================= */
+
+/* BREADCRUMB */
+.breadcrumb {
+  padding: 1rem 4rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: var(--clr-text);
+  opacity: 0.5;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.breadcrumb a {
+  transition: opacity 0.2s;
+}
+
+.breadcrumb a:hover {
+  opacity: 0.7;
+}
+
+/* PRODUCT LAYOUT */
+.product {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: 3rem;
+  padding: 2rem 3rem 5rem;
+  max-width: 1800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* FOTO KOLOM */
+.product__fotos {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.product__foto-item {
+  width: 100%;
+  min-height: 20rem;
+  background: var(--clr-card);
+  overflow: hidden;
+}
+
+.product__foto-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  cursor: zoom-in;
+}
+
+.product__foto-item video {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.product__foto-placeholder {
+  aspect-ratio: 3/4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-align: center;
+  color: var(--clr-text);
+  opacity: 0.3;
+  text-transform: uppercase;
+  line-height: 1.8;
+}
+
+/* INFO KOLOM */
+.product__info {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-top: 0.5rem;
+  position: sticky;
+  top: calc(var(--nav-h) + var(--balk-h));
+}
+
+.product__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.product__badge {
+  display: inline-block;
+  width: fit-content;
+  padding: 0.25rem 0.75rem;
+  background: var(--clr-gold);
+  color: var(--clr-text);
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  border-radius: 999px;
+}
+
+.product__badge--nieuw,
+.product__badge--laatste-items {
+  background: var(--clr-text);
+  color: var(--clr-bg);
+}
+
+.product__titel {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 1.9vw, 1.7rem);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.product__titel em {
+  font-style: italic;
+  font-weight: 300;
+}
+
+.product__reviews {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.product__sterren {
+  color: var(--clr-gold);
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.product__review-count {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 300;
+  opacity: 0.5;
+}
+
+.product__divider {
+  height: 1px;
+  background: var(--clr-border);
+}
+
+.product__prijs {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.product__op-voorraad {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: #4a8c6a;
+}
+
+.product__op-voorraad:empty {
+  display: none;
+}
+
+.product__prijs--uitverkocht {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--clr-text);
+  opacity: 0.55;
+}
+
+.product__sectie {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.product__label {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--clr-text);
+  opacity: 0.5;
+}
+
+.product__materiaal {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+/* MATEN */
+.product__maten {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.maat {
+  width: 44px;
+  height: 44px;
+  border: 1.5px solid var(--clr-border);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--clr-text);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.maat:hover {
+  border-color: var(--clr-text);
+}
+
+.maat--active {
+  background: var(--clr-text);
+  color: var(--clr-bg);
+  border-color: var(--clr-text);
+}
+
+.product__maatgids {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: var(--clr-gold);
+  margin-left: 0.5rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* CTA KNOPPEN */
+.product__cta {
+  width: 100%;
+  padding: 1.1rem;
+  background: var(--clr-text);
+  color: var(--clr-bg);
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: background 0.25s;
+}
+
+.product__cta:hover {
+  background: var(--clr-gold);
+  color: var(--clr-text);
+}
+
+.product__cta--uitverkocht,
+.product__cta--uitverkocht:hover {
+  background: var(--clr-text);
+  color: var(--clr-bg);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* MELD MIJ OP DE HOOGTE */
+.product__meld-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: -0.5rem;
+}
+
+.product__meld-btn {
+  width: 100%;
+  padding: 1rem;
+  background: transparent;
+  color: var(--clr-text);
+  border: 1.5px solid var(--clr-gold);
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 300;
+  font-style: italic;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s;
+}
+
+.product__meld-btn:hover {
+  background: var(--clr-gold);
+  color: var(--clr-text);
+}
+
+.product__meld-form {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.product__meld-input {
+  flex: 1;
+  padding: 0.9rem 1rem;
+  background: transparent;
+  border: 1.5px solid var(--clr-border);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--clr-text);
+  transition: border-color 0.2s;
+}
+
+.product__meld-input::placeholder {
+  color: var(--clr-text);
+  opacity: 0.4;
+}
+
+.product__meld-input:focus {
+  outline: none;
+  border-color: var(--clr-gold);
+}
+
+.product__meld-submit {
+  padding: 0.9rem 1.5rem;
+  background: var(--clr-text);
+  color: var(--clr-bg);
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.25s;
+}
+
+.product__meld-submit:hover {
+  background: var(--clr-gold);
+  color: var(--clr-text);
+}
+
+.product__meld-bevestiging {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--clr-text);
+  opacity: 0.75;
+  text-align: center;
+  line-height: 1.6;
+  padding: 1rem 1.25rem;
+  background: var(--clr-card);
+  border: 1px solid var(--clr-border);
+}
+
+.product__bewaar {
+  width: 100%;
+  padding: 1rem;
+  background: transparent;
+  color: var(--clr-text);
+  border: 1.5px solid var(--clr-border);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.product__bewaar:hover {
+  border-color: var(--clr-text);
+}
+
+/* USPS */
+.product__usps {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.product__usps li {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 300;
+  opacity: 0.65;
+}
+
+/* ACCORDEON */
+.accordeon {
+  border-top: 1px solid var(--clr-border);
+  margin-top: 0.5rem;
+}
+
+.accordeon__item {
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.accordeon__btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.1rem 0;
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--clr-text);
+  cursor: pointer;
+  text-align: left;
+}
+
+.accordeon__icon {
+  font-size: 1.1rem;
+  font-weight: 300;
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.accordeon__item.is-open .accordeon__icon {
+  transform: rotate(45deg);
+}
+
+.accordeon__content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+}
+
+.accordeon__item.is-open .accordeon__content {
+  max-height: 600px;
+  padding-bottom: 1.25rem;
+}
+
+.accordeon__content p {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.8;
+  opacity: 0.75;
+}
+
+.accordeon__content p + p {
+  margin-top: 1rem;
+}
+
+.accordeon__content ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.accordeon__content ul li {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.6;
+  opacity: 0.75;
+  padding-left: 1.1rem;
+  position: relative;
+}
+
+.accordeon__content ul li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--clr-gold);
+}
+
+/* ANDEREN BEKEKEN OOK */
+.ook-leuk {
+  padding: 4rem 4rem 5rem;
+  background: var(--clr-bg);
+  border-top: 1px solid var(--clr-border);
+}
+
+.ook-leuk__intro {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.ook-leuk__eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  color: var(--clr-gold);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.ook-leuk__titel {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.ook-leuk__divider {
+  width: 60px;
+  height: 1px;
+  background: var(--clr-gold);
+  margin: 0 auto;
+  opacity: 0.5;
+}
+
+.ook-leuk__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 2rem;
+  row-gap: 3rem;
+}
+
+/* Ook leuk cards — naam en prijs onder de foto */
+.ook-leuk__grid .product-card__img-wrap {
+  aspect-ratio: 3/4;
+  background: var(--clr-card);
+  overflow: hidden;
+}
+
+.ook-leuk__grid .product-card__body {
+  padding: 0.75rem 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  text-align: center;
+}
+
+.ook-leuk__grid .product-card__naam {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--clr-text);
+}
+
+.ook-leuk__grid .product-card__prijs {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--clr-gold);
+}
+
+.nav-sub {
+  margin-top: 0;
+  padding: 0.75rem 4rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-sub__terug {
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 300;
+  color: var(--clr-text);
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.nav-sub__terug:hover {
+  opacity: 1;
+}
+
+/* TIKTOK SECTIE */
+.tiktok {
+  padding: 4rem 2.5% 5rem;
+}
+
+.tiktok__intro {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.tiktok__eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  color: var(--clr-gold);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.tiktok__titel {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 300;
+  margin-bottom: 1rem;
+}
+
+.tiktok__divider {
+  width: 60px;
+  height: 1px;
+  background: var(--clr-gold);
+  margin: 0 auto;
+  opacity: 0.5;
+}
+
+.tiktok__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.tiktok__item {
+  position: relative;
+  aspect-ratio: 9/16;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--clr-border);
+}
+
+.tiktok__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.tiktok__item:hover .tiktok__video {
+  transform: scale(1.03);
+}
+
+/* @naam van Sophia — alleen zichtbaar bij hoveren, bovenin */
+.tiktok__handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0.75rem 0.75rem 2rem;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.tiktok__item:hover .tiktok__handle {
+  opacity: 1;
+}
+
+.tiktok__naam {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  color: #fff;
+  font-weight: 400;
+}
+
+/* Productkaartje — altijd zichtbaar, onderaan */
+.tiktok__productkaart {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.75rem 0.6rem 0.6rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tiktok__product-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--clr-border);
+  border: 1.5px solid rgba(255,255,255,0.8);
+}
+
+.tiktok__product-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tiktok__product-naam {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* TIKTOK OVERLAY */
+.tiktok-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  padding: 2rem;
+}
+
+.tiktok-overlay.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.tiktok-overlay__content {
+  background: #000;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  position: relative;
+  border-radius: 2px;
+}
+
+.tiktok-overlay__sluit {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+  background: rgba(0,0,0,0.5);
+  border: none;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.tiktok-overlay__sluit:hover {
+  background: rgba(0,0,0,0.8);
+}
+
+.tiktok-overlay__links {
+  position: relative;
+  aspect-ratio: 9/16;
+  max-height: 90vh;
+}
+
+.tiktok-overlay__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tiktok-overlay__info {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tiktok-overlay__naam {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: #fff;
+  font-weight: 400;
+}
+
+.tiktok-overlay__geluid {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.tiktok-overlay__geluid:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.tiktok-overlay__rechts {
+  background: var(--clr-bg);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  overflow-y: auto;
+}
+
+.tiktok-overlay__titel {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 300;
+  font-style: italic;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.tiktok-overlay__product {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.tiktok-overlay__product-img {
+  width: 80px;
+  height: 80px;
+  background: var(--clr-border);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.tiktok-overlay__product-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tiktok-overlay__product-naam {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 300;
+  margin-bottom: 0.25rem;
+}
+
+.tiktok-overlay__product-prijs {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--clr-gold);
+}
+
+.tiktok-overlay__cta {
+  width: 100%;
+  padding: 1rem;
+  background: var(--clr-text);
+  color: var(--clr-bg);
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.tiktok-overlay__cta:hover {
+  background: var(--clr-gold);
+  color: var(--clr-text);
+}
+
+.tiktok-overlay__sub {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 300;
+  opacity: 0.5;
+  text-align: center;
+}
+
+.tiktok-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 499;
+  background: rgba(0,0,0,0.7);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.tiktok-backdrop.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.tiktok-overlay__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.tiktok-overlay__nav:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.tiktok-overlay__nav--links { left: 0.75rem; }
+.tiktok-overlay__nav--rechts { right: 0.75rem; }
+
+@media (max-width: 900px) {
+  .product__prijs {
+    font-size: 1.3rem;
+  }
+
+  .tiktok__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tiktok-overlay__content {
+    grid-template-columns: 1fr;
+    max-height: 95vh;
+  }
+
+  .tiktok-overlay__links {
+    aspect-ratio: 9/12;
+  }
+
+  .breadcrumb {
+    display: none;
+  }
+
+  .nav-sub {
+    padding: 0.15rem 2rem 0.15rem 0.9rem;
+  }
+
+  .nav-sub__terug {
+    margin-top: 0;
+    font-size: 1.45rem;
+  }
+
+  .nav-sub__terug-label {
+    display: none;
+  }
+
+  .product__fotos {
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 0.5rem;
+  }
+
+  .product__fotos::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product__foto-item {
+    flex: 0 0 88%;
+    width: 88%;
+    min-height: 0;
+    aspect-ratio: 3/4;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .product__foto-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product__foto-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0.1rem 0 5rem;
+  }
+
+  .product__fotos {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .product__info {
+    grid-column: 1;
+    grid-row: auto;
+    position: static;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .ook-leuk {
+    padding: 3rem 1rem 4rem;
+  }
+
+  .ook-leuk__grid {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1.5rem;
+    row-gap: 3rem;
+  }
+
+  .product__meld-form {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 500px) {
+  .ook-leuk__grid {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 8px;
+    row-gap: 2.5rem;
+  }
+}
+/* FOTO LIGHTBOX */
+.foto-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: flex;
+  flex-direction: column;
+  background: var(--clr-bg);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.foto-overlay.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.foto-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 399;
+  background: rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.foto-backdrop.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.foto-overlay__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--clr-border);
+  flex-shrink: 0;
+}
+
+.foto-overlay__titel {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--clr-text);
+}
+
+.foto-overlay__sluit {
+  background: none;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  color: var(--clr-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.foto-overlay__sluit:hover {
+  background: var(--clr-card);
+}
+
+.foto-overlay__foto-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--clr-card);
+}
+
+.foto-overlay__img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  user-select: none;
+  will-change: transform;
+}
+
+.foto-overlay__pijl {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  color: var(--clr-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  transition: background 0.2s;
+}
+
+.foto-overlay__pijl:hover {
+  background: #fff;
+}
+
+.foto-overlay__pijl--links {
+  left: 1.5rem;
+}
+
+.foto-overlay__pijl--rechts {
+  right: 1.5rem;
+}
+
+.foto-overlay__bullets {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.foto-overlay__bullet {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.2);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.foto-overlay__bullet--actief {
+  background: var(--clr-gold);
+}
+
+@media (max-width: 900px) {
+  .foto-overlay__header {
+    padding: 1rem 1.25rem;
+  }
+
+  .foto-overlay__titel {
+    font-size: 0.95rem;
+  }
+
+  .foto-overlay__pijl {
+    width: 40px;
+    height: 40px;
+  }
+
+  .foto-overlay__pijl--links {
+    left: 0.75rem;
+  }
+
+  .foto-overlay__pijl--rechts {
+    right: 0.75rem;
+  }
+}
