@@ -42,16 +42,16 @@
 
   const heroAfbeeldingen = {
     'all': 'images/alles-hero.jpg',
-    'handchains': 'images/hero-handchains.png',
+    'handchains': 'images/hero-handchains.jpg',
     'kettingen': 'images/kettingen-hero.jpg',
-    'oorbellen': 'images/oorbellen-hero.png',
+    'oorbellen': 'images/oorbellen-hero.jpg',
     'combi': 'images/sets-hero.jpg',
     'nieuw': 'images/alles-hero.jpg',
     'bestsellers': 'images/bestsellers-hero.jpg',
-    'côte,capri': 'images/hero-handchains.png',
-    'capri,côte': 'images/hero-handchains.png',
+    'côte,capri': 'images/hero-handchains.jpg',
+    'capri,côte': 'images/hero-handchains.jpg',
     'côte': 'images/handchain-hero.jpg',
-    'capri': 'images/capri-hero.png',
+    'capri': 'images/capri-hero.jpg',
     'azure': 'images/oorbellen-hero.png',
     'soleil': 'images/kettingen-hero.jpg',
   };
