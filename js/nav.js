@@ -59,6 +59,37 @@ navOverlay?.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', closeMenu);
 });
 
+// Blokkeert horizontaal swipen binnen het menu (bv. Safari's "swipe vanaf
+// de rand = terug"-gebaar) zonder verticaal scrollen te hinderen. Puur CSS
+// (touch-action) kan dit browser-navigatiegebaar niet tegenhouden, dus dat
+// doen we hier expliciet zelf.
+(function () {
+  let startX = null;
+  let startY = null;
+  let blokkeerHorizontaal = false;
+
+  [navOverlay, document.getElementById('collectieSubmenu')].forEach(el => {
+    if (!el) return;
+    el.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      blokkeerHorizontaal = false;
+    }, { passive: true });
+
+    el.addEventListener('touchmove', (e) => {
+      if (startX === null) return;
+      const dx = e.touches[0].clientX - startX;
+      const dy = e.touches[0].clientY - startY;
+      if (!blokkeerHorizontaal && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
+        blokkeerHorizontaal = true;
+      }
+      if (blokkeerHorizontaal) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+  });
+})();
+
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeMenu();
