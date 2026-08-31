@@ -107,7 +107,31 @@ const collectieSubmenu = document.getElementById('collectieSubmenu');
 const submenuTerug = document.getElementById('submenuTerug');
 
 if (collectieBtn) {
-  collectieBtn.addEventListener('click', () => {
+  // Onderscheid een echte tik van een sleepbeweging (swipe) die toevallig
+  // over deze rij gaat — browsers vuren anders alsnog een click-event af
+  // bij een korte drag, waardoor het submenu per ongeluk opende.
+  let collectieBtnStartX = null;
+  let collectieBtnStartY = null;
+  let collectieBtnWasSwipe = false;
+
+  collectieBtn.addEventListener('touchstart', (e) => {
+    collectieBtnStartX = e.touches[0].clientX;
+    collectieBtnStartY = e.touches[0].clientY;
+    collectieBtnWasSwipe = false;
+  }, { passive: true });
+
+  collectieBtn.addEventListener('touchmove', (e) => {
+    if (collectieBtnStartX === null) return;
+    const dx = Math.abs(e.touches[0].clientX - collectieBtnStartX);
+    const dy = Math.abs(e.touches[0].clientY - collectieBtnStartY);
+    if (dx > 10 || dy > 10) collectieBtnWasSwipe = true;
+  }, { passive: true });
+
+  collectieBtn.addEventListener('click', (e) => {
+    if (collectieBtnWasSwipe) {
+      e.preventDefault();
+      return;
+    }
     collectieSubmenu.classList.add('is-open');
   });
 }
@@ -268,8 +292,12 @@ function sluitZoek() {
   if (wis) wis.classList.remove('zichtbaar');
 }
 
+function zoekNormaliseer(tekst) {
+  return tekst.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
 async function zoekQuery(term) {
-  term = term.trim().toLowerCase();
+  term = zoekNormaliseer(term.trim().toLowerCase());
   document.getElementById('zoekWis')?.classList.toggle('zichtbaar', term.length > 0);
 
   if (term.length === 0) {
@@ -279,7 +307,7 @@ async function zoekQuery(term) {
   }
 
   const PRODUCTS = await window.sopheaProductsPromise;
-  const resultaten = PRODUCTS.filter(p => p.naam.toLowerCase().includes(term));
+  const resultaten = PRODUCTS.filter(p => zoekNormaliseer(p.naam.toLowerCase()).includes(term));
 
   document.getElementById('zoekLeeg').style.display = 'none';
 
