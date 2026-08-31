@@ -285,6 +285,8 @@ a {
   pointer-events: none;
   transition: transform 0.4s ease;
   overflow-y: auto;
+  overflow-x: hidden;
+  touch-action: pan-y;
   border-right: 2px solid rgba(255,255,255,0.15);
 }
 
@@ -505,6 +507,8 @@ a {
   transform: translateX(100%);
   transition: transform 0.35s ease;
   overflow-y: auto;
+  overflow-x: hidden;
+  touch-action: pan-y;
   z-index: 5;
 }
 
