@@ -71,17 +71,21 @@
     const grid = document.getElementById('featuredGrid');
     if (!grid) return;
 
+    // Alleen hand chains in deze sectie — anders kan een bestseller uit een
+    // andere categorie (bv. oorbellen) hier per ongeluk tussen komen staan.
+    const handChains = PRODUCTS.filter(p => p.categorie === 'handchains');
+
     // Vaste volgorde: eerst de bestseller, dan turquoise, roze, blauw (niet navy)
-    const bestseller = PRODUCTS.find(p => p.badge === 'bestseller');
-    const turquoise = PRODUCTS.find(p => p.kleur === 'turquoise');
-    const roze = PRODUCTS.find(p => p.kleur === 'roze');
-    const blauw = PRODUCTS.find(p => p.kleur === 'blauw');
+    const bestseller = handChains.find(p => p.badge === 'bestseller');
+    const turquoise = handChains.find(p => p.kleur === 'turquoise');
+    const roze = handChains.find(p => p.kleur === 'roze');
+    const blauw = handChains.find(p => p.kleur === 'blauw');
 
     let featured = [bestseller, turquoise, roze, blauw].filter(Boolean);
 
-    // Vul aan met overige producten als er (nog) minder dan 4 matches zijn
+    // Vul aan met overige hand chains als er (nog) minder dan 4 matches zijn
     if (featured.length < 4) {
-      const restProducten = PRODUCTS.filter(p => !featured.includes(p));
+      const restProducten = handChains.filter(p => !featured.includes(p));
       featured = featured.concat(restProducten.slice(0, 4 - featured.length));
     }
     grid.innerHTML = featured.map(productKaartHTML).join('');
