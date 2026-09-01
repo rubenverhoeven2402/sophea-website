@@ -492,7 +492,6 @@ document.head.appendChild(emailjsScript);
       .map(p => {
         let score = 0;
         if (p.kleur && p.kleur === product.kleur) score += 6;
-        else if (p.kleurGroep && p.kleurGroep === product.kleurGroep) score += 3;
         if (p.categorie === product.categorie) score += 2;
         if (p.model && p.model === product.model) score += 1;
         return { p, score: score + Math.random() * 1 };
