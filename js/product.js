@@ -1180,7 +1180,7 @@ document.head.appendChild(emailjsScript);
       clearTimeout(stlSwipeHintTimer);
       stlSwipeHintTimer = setTimeout(() => {
         document.getElementById('stlOverlaySwipeHint')?.classList.add('is-verborgen');
-      }, 400);
+      }, 200);
     }
   }, { capture: true, passive: true });
 
