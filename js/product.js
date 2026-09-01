@@ -491,7 +491,8 @@ document.head.appendChild(emailjsScript);
       .filter(p => p.id !== product.id)
       .map(p => {
         let score = 0;
-        if (p.kleurGroep && p.kleurGroep === product.kleurGroep) score += 6;
+        if (p.kleur && p.kleur === product.kleur) score += 6;
+        else if (p.kleurGroep && p.kleurGroep === product.kleurGroep) score += 3;
         if (p.categorie === product.categorie) score += 2;
         if (p.model && p.model === product.model) score += 1;
         return { p, score: score + Math.random() * 1 };
@@ -1173,14 +1174,10 @@ document.head.appendChild(emailjsScript);
   }
 
   let stlProductScrollY = 0;
-  let stlSwipeHintTimer = null;
 
   document.addEventListener('scroll', (e) => {
     if (e.target.closest && e.target.closest('.stl-overlay')) {
-      clearTimeout(stlSwipeHintTimer);
-      stlSwipeHintTimer = setTimeout(() => {
-        document.getElementById('stlOverlaySwipeHint')?.classList.add('is-verborgen');
-      }, 200);
+      document.getElementById('stlOverlaySwipeHint')?.classList.add('is-verborgen');
     }
   }, { capture: true, passive: true });
 
@@ -1188,7 +1185,6 @@ document.head.appendChild(emailjsScript);
     renderSTLOverlay();
     document.getElementById('stlOverlay')?.classList.add('is-open');
     document.getElementById('stlBackdrop')?.classList.add('is-open');
-    clearTimeout(stlSwipeHintTimer);
     document.getElementById('stlOverlaySwipeHint')?.classList.remove('is-verborgen');
     // position: fixed i.p.v. overflow: hidden — overflow: hidden (ook
     // tijdelijk) breekt position: sticky permanent in Safari/iOS.
