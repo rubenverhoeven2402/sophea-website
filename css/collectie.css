@@ -96,6 +96,14 @@
   z-index: 50;
 }
 
+/* Vanaf tablet/laptop-breedte de hero links laten uitlijnen met de
+   filter-bar eronder (die 4rem padding gebruikt i.p.v. de 3rem van de hero). */
+@media (min-width: 901px) {
+  .collectie-hero {
+    padding-left: 4rem;
+  }
+}
+
 .filter-bar__left {
   display: flex;
   align-items: center;
