@@ -55,3 +55,9 @@
     transform: none;
   }
 }
+
+@media (max-width: 500px) {
+  .sophea-intro__logo {
+    width: 110px;
+  }
+}
