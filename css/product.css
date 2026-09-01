@@ -724,10 +724,10 @@
 }
 
 .tiktok-overlay__sluit {
-  position: absolute;
+  position: fixed;
   top: 1rem;
   right: 1rem;
-  z-index: 10;
+  z-index: 510;
   background: rgba(0,0,0,0.5);
   border: none;
   color: #fff;
