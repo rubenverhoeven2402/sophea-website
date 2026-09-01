@@ -707,7 +707,7 @@ document.head.appendChild(emailjsScript);
   } else {
     if (tiktokGrid) {
       tiktokGrid.innerHTML = TIKTOK_DATA.map((data, index) => {
-        const hoofdproduct = data.producten[0];
+        const hoofdproduct = data.producten.find(p => p.handle === product.handle) || data.producten[0];
         return `
         <div class="tiktok__item" data-index="${index}">
           <video class="tiktok__video" src="videos/${data.video}" loop muted playsinline></video>
