@@ -436,8 +436,8 @@ async function renderCartOverlay() {
     const p = getP(item.productId);
     return sum + (p ? p.prijs * item.aantal : 0);
   }, 0);
-  const verzending = subtotaal >= 50 ? 'Gratis' : '€ 4,95';
-  const totaal = subtotaal >= 50 ? subtotaal : subtotaal + 4.95;
+  const verzending = subtotaal >= 50 ? 'Gratis' : '€ 3,95';
+  const totaal = subtotaal >= 50 ? subtotaal : subtotaal + 3.95;
 
   document.getElementById('cartSubtotaal').textContent = `€ ${subtotaal.toFixed(2).replace('.', ',')}`;
   document.getElementById('cartVerzending').textContent = verzending;
