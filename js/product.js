@@ -1174,9 +1174,11 @@ document.head.appendChild(emailjsScript);
 
   let stlProductScrollY = 0;
 
-  document.querySelector('.stl-overlay__content')?.addEventListener('scroll', () => {
-    document.getElementById('stlOverlaySwipeHint')?.classList.add('is-verborgen');
-  }, { passive: true });
+  document.addEventListener('scroll', (e) => {
+    if (e.target.closest && e.target.closest('.stl-overlay')) {
+      document.getElementById('stlOverlaySwipeHint')?.classList.add('is-verborgen');
+    }
+  }, { capture: true, passive: true });
 
   function openSTLOverlay() {
     renderSTLOverlay();
