@@ -534,6 +534,7 @@
 
   .stl-overlay__swipe-hint.is-verborgen {
     opacity: 0;
+    animation: none;
   }
 
   @keyframes stlSwipeHintBounce {
