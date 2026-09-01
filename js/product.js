@@ -1174,10 +1174,15 @@ document.head.appendChild(emailjsScript);
 
   let stlProductScrollY = 0;
 
+  document.querySelector('.stl-overlay__content')?.addEventListener('scroll', () => {
+    document.getElementById('stlOverlaySwipeHint')?.classList.add('is-verborgen');
+  }, { passive: true });
+
   function openSTLOverlay() {
     renderSTLOverlay();
     document.getElementById('stlOverlay')?.classList.add('is-open');
     document.getElementById('stlBackdrop')?.classList.add('is-open');
+    document.getElementById('stlOverlaySwipeHint')?.classList.remove('is-verborgen');
     // position: fixed i.p.v. overflow: hidden — overflow: hidden (ook
     // tijdelijk) breekt position: sticky permanent in Safari/iOS.
     stlProductScrollY = window.scrollY;
