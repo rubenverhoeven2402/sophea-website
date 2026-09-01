@@ -1173,10 +1173,14 @@ document.head.appendChild(emailjsScript);
   }
 
   let stlProductScrollY = 0;
+  let stlSwipeHintTimer = null;
 
   document.addEventListener('scroll', (e) => {
     if (e.target.closest && e.target.closest('.stl-overlay')) {
-      document.getElementById('stlOverlaySwipeHint')?.classList.add('is-verborgen');
+      clearTimeout(stlSwipeHintTimer);
+      stlSwipeHintTimer = setTimeout(() => {
+        document.getElementById('stlOverlaySwipeHint')?.classList.add('is-verborgen');
+      }, 400);
     }
   }, { capture: true, passive: true });
 
@@ -1184,6 +1188,7 @@ document.head.appendChild(emailjsScript);
     renderSTLOverlay();
     document.getElementById('stlOverlay')?.classList.add('is-open');
     document.getElementById('stlBackdrop')?.classList.add('is-open');
+    clearTimeout(stlSwipeHintTimer);
     document.getElementById('stlOverlaySwipeHint')?.classList.remove('is-verborgen');
     // position: fixed i.p.v. overflow: hidden — overflow: hidden (ook
     // tijdelijk) breekt position: sticky permanent in Safari/iOS.
