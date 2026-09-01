@@ -923,10 +923,18 @@
   .tiktok-overlay__content {
     grid-template-columns: 1fr;
     max-height: 95vh;
+    height: 95dvh;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .tiktok-overlay__links {
     aspect-ratio: 9/12;
+    flex-shrink: 0;
+  }
+
+  .tiktok-overlay__rechts {
+    overflow-y: visible;
   }
 
   .breadcrumb {
