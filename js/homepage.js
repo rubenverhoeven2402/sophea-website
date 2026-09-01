@@ -385,10 +385,15 @@
 
   let stlScrollY = 0;
 
+  document.querySelector('.stl-overlay__content')?.addEventListener('scroll', () => {
+    document.getElementById('stlOverlaySwipeHint')?.classList.add('is-verborgen');
+  }, { passive: true });
+
   function openOverlay() {
     renderOverlay();
     document.getElementById('stlOverlay').classList.add('is-open');
     document.getElementById('stlBackdrop').classList.add('is-open');
+    document.getElementById('stlOverlaySwipeHint')?.classList.remove('is-verborgen');
     // position: fixed i.p.v. overflow: hidden — overflow: hidden (ook
     // tijdelijk) breekt position: sticky permanent in Safari/iOS.
     stlScrollY = window.scrollY;
