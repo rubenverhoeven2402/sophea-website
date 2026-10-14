@@ -70,28 +70,9 @@ function normaliseerCategorie(categorie) {
   return CATEGORIE_ALIASSEN[lower] || lower;
 }
 
-async function haalShopifyProducten() {
-  // Cache-key opgehoogd naar v2 omdat het productschema is uitgebreid
-  // met kleurGroep — voorkomt dat oude sessionStorage-cache zonder dat
-  // veld de nieuwe filterlogica breekt.
-  // Cache-key opgehoogd naar v6 — producten hebben nu een collecties-array
-  // (meerdere collectie:-tags per product mogelijk) i.p.v. één vaste
-  // collectie-waarde. Voorkomt dat oude cache zonder dat veld de nieuwe
-  // filterlogica breekt.
-  // Cache-key opgehoogd naar v7 — producten hebben nu een afmetingen-veld
-  // (metafield custom.afmetingen). Voorkomt dat oude cache zonder dat veld
-  // een lege Afmetingen-accordion toont.
-  // Cache-key opgehoogd naar v8 — producten hebben nu een media-veld
-  // (foto's én video's samen, in de volgorde zoals in Shopify ingesteld)
-  // naast het bestaande images-veld. Voorkomt dat oude cache zonder dat
-  // veld video's niet toont op de productpagina.
-  const cache = sessionStorage.getItem('sophea-producten-v8');
-  if (cache) return JSON.parse(cache);
-
-  const query = `{
-    products(first: 100) {
-      edges {
-        node {
+// Velden die we per product ophalen. Gedeeld door de lijst-query en de
+// losse query per handle, zodat beide precies dezelfde productdata opleveren.
+const PRODUCT_VELDEN = `
           title
           handle
           tags
@@ -124,86 +105,138 @@ async function haalShopifyProducten() {
           metaAfmetingen: metafield(namespace: "custom", key: "afmetingen") {
             value
           }
-        }
-      }
-    }
-  }`;
+`;
 
+async function shopifyQuery(query, variables = {}) {
   const res = await fetch(`https://${SHOPIFY_DOMEIN}/api/${API_VERSIE}/graphql.json`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'X-Shopify-Storefront-Access-Token': STOREFRONT_TOKEN,
     },
-    body: JSON.stringify({ query }),
+    body: JSON.stringify({ query, variables }),
   });
+  return res.json();
+}
 
-  const json = await res.json();
+// Zet een Shopify-productnode om naar het productobject dat de site gebruikt.
+function naarProduct(node, index) {
+  const variant = node.variants.edges[0]?.node;
+  const variantId = variant?.id.split('/').pop() || null;
 
-  const producten = json.data.products.edges.map(({ node }, index) => {
-    const variant = node.variants.edges[0]?.node;
-    const variantId = variant?.id.split('/').pop() || null;
+  const getTag = (prefix) => node.tags.find(t => t.startsWith(prefix + ':'))?.split(':')[1] || null;
+  const getTags = (prefix) => node.tags.filter(t => t.startsWith(prefix + ':')).map(t => t.split(':')[1]);
 
-    const getTag = (prefix) => node.tags.find(t => t.startsWith(prefix + ':'))?.split(':')[1] || null;
-    const getTags = (prefix) => node.tags.filter(t => t.startsWith(prefix + ':')).map(t => t.split(':')[1]);
+  const afbeeldingen = node.images.edges.map(e => e.node.url);
 
-    const afbeeldingen = node.images.edges.map(e => e.node.url);
+  // Media in Shopify's eigen volgorde, foto's én video's samen — gebruikt
+  // op de productpagina voor de hoofdcarrousel. Voor video's pakken we bij
+  // voorkeur de mp4-bron; als die er niet is, de eerste beschikbare bron.
+  const media = node.media.edges.map(e => {
+    if (e.node.mediaContentType === 'VIDEO') {
+      const bronnen = e.node.sources || [];
+      const mp4 = bronnen.find(b => b.mimeType === 'video/mp4');
+      return { type: 'video', src: (mp4 || bronnen[0])?.url };
+    }
+    return { type: 'image', src: e.node.image?.url };
+  }).filter(m => m.src);
 
-    // Media in Shopify's eigen volgorde, foto's én video's samen — gebruikt
-    // op de productpagina voor de hoofdcarrousel. Voor video's pakken we bij
-    // voorkeur de mp4-bron; als die er niet is, de eerste beschikbare bron.
-    const media = node.media.edges.map(e => {
-      if (e.node.mediaContentType === 'VIDEO') {
-        const bronnen = e.node.sources || [];
-        const mp4 = bronnen.find(b => b.mimeType === 'video/mp4');
-        return { type: 'video', src: (mp4 || bronnen[0])?.url };
+  const parseMetaLijst = (metafield) => {
+    if (!metafield || !metafield.value) return [];
+    try {
+      const parsed = JSON.parse(metafield.value);
+      return Array.isArray(parsed) ? parsed : [metafield.value];
+    } catch {
+      // Niet-lijst metafield: elke regel wordt een eigen bullet
+      return metafield.value.split('\n').map(r => r.trim()).filter(Boolean);
+    }
+  };
+
+  return {
+      id: node.handle,
+      naam: node.title,
+      prijs: Math.round(parseFloat(variant?.price?.amount || 0) * 100) / 100,
+      categorieen: getTags('categorie').length > 0
+        ? getTags('categorie').map(normaliseerCategorie)
+        : ['handchains'],
+      get categorie() { return this.categorieen[0]; },
+      kleur: getTag('kleur') || '',
+      kleurGroep: algemeneKleur(getTag('kleur')),
+      badge: getTag('badge'),
+      badges: getTags('badge'),
+      model: getTag('model') || null,
+      collecties: getTags('collectie'),
+      get collectie() { return this.collecties[0] || null; },
+      handle: node.handle,
+      image: afbeeldingen[0] || null,
+      images: afbeeldingen,
+      media,
+      variantId,
+      volgorde: index,
+      beschikbaar: variant ? variant.availableForSale : true,
+      voorraad: variant && typeof variant.quantityAvailable === 'number' ? variant.quantityAvailable : null,
+      beschrijving: node.descriptionHtml || '',
+      details: parseMetaLijst(node.metaDetails),
+      materiaal: parseMetaLijst(node.metaMateriaal),
+      afmetingen: parseMetaLijst(node.metaAfmetingen),
+  };
+}
+
+async function haalShopifyProducten() {
+  // Cache-key opgehoogd naar v2 omdat het productschema is uitgebreid
+  // met kleurGroep — voorkomt dat oude sessionStorage-cache zonder dat
+  // veld de nieuwe filterlogica breekt.
+  // Cache-key opgehoogd naar v6 — producten hebben nu een collecties-array
+  // (meerdere collectie:-tags per product mogelijk) i.p.v. één vaste
+  // collectie-waarde. Voorkomt dat oude cache zonder dat veld de nieuwe
+  // filterlogica breekt.
+  // Cache-key opgehoogd naar v7 — producten hebben nu een afmetingen-veld
+  // (metafield custom.afmetingen). Voorkomt dat oude cache zonder dat veld
+  // een lege Afmetingen-accordion toont.
+  // Cache-key opgehoogd naar v8 — producten hebben nu een media-veld
+  // (foto's én video's samen, in de volgorde zoals in Shopify ingesteld)
+  // naast het bestaande images-veld. Voorkomt dat oude cache zonder dat
+  // veld video's niet toont op de productpagina.
+  const cache = sessionStorage.getItem('sophea-producten-v8');
+  if (cache) return JSON.parse(cache);
+
+  const query = `{
+    products(first: 100) {
+      edges {
+        node {
+${PRODUCT_VELDEN}        }
       }
-      return { type: 'image', src: e.node.image?.url };
-    }).filter(m => m.src);
+    }
+  }`;
 
-    const parseMetaLijst = (metafield) => {
-      if (!metafield || !metafield.value) return [];
-      try {
-        const parsed = JSON.parse(metafield.value);
-        return Array.isArray(parsed) ? parsed : [metafield.value];
-      } catch {
-        // Niet-lijst metafield: elke regel wordt een eigen bullet
-        return metafield.value.split('\n').map(r => r.trim()).filter(Boolean);
-      }
-    };
+  const json = await shopifyQuery(query);
 
-    return {
-        id: node.handle,
-        naam: node.title,
-        prijs: Math.round(parseFloat(variant?.price?.amount || 0) * 100) / 100,
-        categorieen: getTags('categorie').length > 0
-          ? getTags('categorie').map(normaliseerCategorie)
-          : ['handchains'],
-        get categorie() { return this.categorieen[0]; },
-        kleur: getTag('kleur') || '',
-        kleurGroep: algemeneKleur(getTag('kleur')),
-        badge: getTag('badge'),
-        badges: getTags('badge'),
-        model: getTag('model') || null,
-        collecties: getTags('collectie'),
-        get collectie() { return this.collecties[0] || null; },
-        handle: node.handle,
-        image: afbeeldingen[0] || null,
-        images: afbeeldingen,
-        media,
-        variantId,
-        volgorde: index,
-        beschikbaar: variant ? variant.availableForSale : true,
-        voorraad: variant && typeof variant.quantityAvailable === 'number' ? variant.quantityAvailable : null,
-        beschrijving: node.descriptionHtml || '',
-        details: parseMetaLijst(node.metaDetails),
-        materiaal: parseMetaLijst(node.metaMateriaal),
-        afmetingen: parseMetaLijst(node.metaAfmetingen),
-    };
-  });
+  const producten = json.data.products.edges.map(({ node }, index) => naarProduct(node, index));
 
   sessionStorage.setItem('sophea-producten-v8', JSON.stringify(producten));
   return producten;
 }
 
+// Haalt één product op via de handle. Nodig voor producten met status
+// "Verborgen" in Shopify: die staan niet in de lijst hierboven (Shopify laat
+// ze bewust weg uit lijsten en zoekresultaten), maar zijn wel op te vragen via
+// hun directe link. Geeft null terug als het product niet bestaat of niet in
+// het Headless-kanaal gepubliceerd is.
+async function haalShopifyProduct(handle) {
+  if (!handle) return null;
+  const query = `query ProductOpHandle($handle: String!) {
+    product(handle: $handle) {
+      ${PRODUCT_VELDEN}
+    }
+  }`;
+  try {
+    const json = await shopifyQuery(query, { handle });
+    const node = json.data?.product;
+    return node ? naarProduct(node, 999) : null;
+  } catch {
+    return null;
+  }
+}
+
 window.sopheaProductsPromise = haalShopifyProducten();
+window.sopheaHaalProduct = haalShopifyProduct;
