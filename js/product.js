@@ -943,28 +943,9 @@ document.head.appendChild(emailjsScript);
     ],
   };
 
-  const livData = {
-    naam: '@livkortmann',
-    fotos: [
-      maakFoto('images/liv-1.jpg', [
-        'cote-x-capri-complete-set-roze-gold-plated',
-        'golden-hour-x-hand-chain-set-roze-gold-plated',
-        'golden-hour-oorbellen-roze-gold-plated',
-        'golden-hour-ketting-roze-gold-plated',
-      ]),
-      maakFoto('images/liv-2.jpg', [
-        'cote-x-capri-complete-set-roze-gold-plated',
-        'golden-hour-x-hand-chain-set-roze-gold-plated',
-        'golden-hour-oorbellen-roze-gold-plated',
-        'golden-hour-ketting-roze-gold-plated',
-      ]),
-    ],
-  };
-
   const elishaData = {
     naam: '@elishatenkate',
     fotos: [
-      maakFoto('images/elisha-1-nieuwste.jpg', ['capri-hand-chain-helder-gold-plated']),
       maakFoto('images/elisha-1-nieuw.jpg', [
         'golden-hour-voordeelset-navy-gold-plated',
         'capri-hand-chain-navy-gold-plated',
@@ -1044,7 +1025,7 @@ document.head.appendChild(emailjsScript);
   // rest uit. SOPHIA_INDEX wordt via indexOf opgezocht i.p.v. berekend
   // vanaf de lengte, zodat het blijft kloppen ongeacht hoeveel mensen er na
   // Sophia in de array staan.
-  const STL_DATA = [sophiaData, livData, elishaData, ellaData, dakotaData, julieData];
+  const STL_DATA = [sophiaData, elishaData, ellaData, dakotaData, julieData];
   const SOPHIA_INDEX = STL_DATA.indexOf(sophiaData);
 
   let stlActiefInfluencer = 0;
