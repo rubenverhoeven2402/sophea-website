@@ -27,7 +27,18 @@ document.head.appendChild(emailjsScript);
   // Haal product op via URL handle
   const params = new URLSearchParams(window.location.search);
   const handle = params.get('handle');
-  const product = PRODUCTS.find(p => p.handle === handle) || PRODUCTS[0];
+  // Staat het product niet in de lijst (bv. status "Verborgen" in Shopify),
+  // dan halen we het los op via de handle uit de link. We voegen het daarna
+  // toe aan PRODUCTS, zodat kleurvarianten en "Shop the look" het ook vinden.
+  let product = PRODUCTS.find(p => p.handle === handle);
+  if (!product && handle && window.sopheaHaalProduct) {
+    product = await window.sopheaHaalProduct(handle);
+    if (product) {
+      product.volgorde = PRODUCTS.length;
+      PRODUCTS.push(product);
+    }
+  }
+  if (!product) product = PRODUCTS[0];
 
   function formatPrijs(bedrag) {
     return Number(bedrag).toFixed(2).replace('.', ',');
@@ -646,7 +657,7 @@ document.head.appendChild(emailjsScript);
           'golden-hour-ketting-navy-gold-plated',
           'golden-hour-oorbellen-navy-gold-plated',
           'golden-hour-x-hand-chain-set-navy-gold-plated',
-          'cote-complete-set-donkerblauw-gold-plated',
+          'cote-x-capri-complete-set-donkerblauw-gold-plated',
         ],
       },
     ],
@@ -658,7 +669,7 @@ document.head.appendChild(emailjsScript);
           'golden-hour-ketting-navy-gold-plated',
           'golden-hour-oorbellen-navy-gold-plated',
           'golden-hour-x-hand-chain-set-navy-gold-plated',
-          'cote-complete-set-donkerblauw-gold-plated',
+          'cote-x-capri-complete-set-donkerblauw-gold-plated',
         ],
       },
     ],
@@ -670,11 +681,11 @@ document.head.appendChild(emailjsScript);
           'golden-hour-ketting-navy-gold-plated',
           'golden-hour-oorbellen-navy-gold-plated',
           'golden-hour-x-hand-chain-set-navy-gold-plated',
-          'cote-complete-set-donkerblauw-gold-plated',
+          'cote-x-capri-complete-set-donkerblauw-gold-plated',
         ],
       },
     ],
-    'cote-complete-set-donkerblauw-gold-plated': [
+    'cote-x-capri-complete-set-donkerblauw-gold-plated': [
       {
         naam: '@sophea.nl',
         video: 'navy-stack.mp4',
@@ -682,7 +693,7 @@ document.head.appendChild(emailjsScript);
           'golden-hour-ketting-navy-gold-plated',
           'golden-hour-oorbellen-navy-gold-plated',
           'golden-hour-x-hand-chain-set-navy-gold-plated',
-          'cote-complete-set-donkerblauw-gold-plated',
+          'cote-x-capri-complete-set-donkerblauw-gold-plated',
         ],
       },
     ],
@@ -905,26 +916,47 @@ document.head.appendChild(emailjsScript);
     naam: '@sophiavandoornik',
     fotos: [
       maakFoto('images/sophia-1.jpg', [
+        'capri-complete-set-helder-gold-plated',
         'golden-hour-ketting-helder-gold-plated',
         'capri-hand-chain-helder-gold-plated',
         'golden-hour-oorbellen-helder-gold-plated',
       ]),
       maakFoto('images/sophia-2-nieuw.jpg', [
+        'capri-complete-set-helder-gold-plated',
         'golden-hour-ketting-helder-gold-plated',
         'capri-hand-chain-helder-gold-plated',
         'golden-hour-oorbellen-helder-gold-plated',
       ]),
       maakFoto('images/sophia-3.jpg', [
+        'capri-complete-set-helder-gold-plated',
         'golden-hour-ketting-helder-gold-plated',
         'capri-hand-chain-helder-gold-plated',
         'golden-hour-oorbellen-helder-gold-plated',
       ]),
       maakFoto('images/sophia.jpg', ['golden-hour-x-hand-chain-set-helder-gold-plated']),
       maakFoto('images/sophia-2.jpg', [
+        'golden-hour-voordeelset-blauw-gold-plated',
         'golden-hour-handchain-blauw-gold-plated',
         'golden-hour-ketting-blauw-gold-plated',
         'golden-hour-oorbellen-blauw-gold-plated',
-        'golden-hour-voordeelset-blauw-gold-plated',
+      ]),
+    ],
+  };
+
+  const livData = {
+    naam: '@livkortmann',
+    fotos: [
+      maakFoto('images/liv-1.jpg', [
+        'cote-x-capri-complete-set-roze-gold-plated',
+        'golden-hour-x-hand-chain-set-roze-gold-plated',
+        'golden-hour-oorbellen-roze-gold-plated',
+        'golden-hour-ketting-roze-gold-plated',
+      ]),
+      maakFoto('images/liv-2.jpg', [
+        'cote-x-capri-complete-set-roze-gold-plated',
+        'golden-hour-x-hand-chain-set-roze-gold-plated',
+        'golden-hour-oorbellen-roze-gold-plated',
+        'golden-hour-ketting-roze-gold-plated',
       ]),
     ],
   };
@@ -932,6 +964,7 @@ document.head.appendChild(emailjsScript);
   const elishaData = {
     naam: '@elishatenkate',
     fotos: [
+      maakFoto('images/elisha-1-nieuwste.jpg', ['capri-hand-chain-helder-gold-plated']),
       maakFoto('images/elisha-1-nieuw.jpg', [
         'golden-hour-voordeelset-navy-gold-plated',
         'capri-hand-chain-navy-gold-plated',
@@ -943,12 +976,14 @@ document.head.appendChild(emailjsScript);
         'golden-hour-oorbellen-navy-gold-plated',
       ]),
       maakFoto('images/elisha.jpeg', [
+        'cote-x-capri-complete-set-roze-gold-plated',
         'golden-hour-ketting-roze-gold-plated',
         'golden-hour-oorbellen-roze-gold-plated',
         'golden-hour-x-hand-chain-set-roze-gold-plated',
       ]),
       maakFoto('images/elisha-2.jpg', [
-        'golden-hour-x-hand-chain-set-navy-gold-plated',
+        'golden-hour-voordeelset-navy-gold-plated',
+        'capri-hand-chain-navy-gold-plated',
         'golden-hour-ketting-navy-gold-plated',
         'golden-hour-oorbellen-navy-gold-plated',
       ]),
@@ -958,16 +993,20 @@ document.head.appendChild(emailjsScript);
   const ellaData = {
     naam: '@ellaverhagen_',
     fotos: [
-      maakFoto('images/ella.jpg', [
-        'golden-hour-x-hand-chain-set-turquoise-gold-plated',
-        'golden-hour-ketting-turquoise-gold-plated',
-        'golden-hour-oorbellen-turquoise-gold-plated',
-      ]),
       maakFoto('images/ella-2.jpg', [
+        'cote-x-capri-complete-set-turquoise-gold-plated',
         'golden-hour-x-hand-chain-set-turquoise-gold-plated',
         'golden-hour-ketting-turquoise-gold-plated',
         'golden-hour-oorbellen-turquoise-gold-plated',
       ]),
+
+      maakFoto('images/ella.jpg', [
+        'cote-x-capri-complete-set-turquoise-gold-plated',
+        'golden-hour-x-hand-chain-set-turquoise-gold-plated',
+        'golden-hour-ketting-turquoise-gold-plated',
+        'golden-hour-oorbellen-turquoise-gold-plated',
+      ]),
+     
     ],
   };
 
@@ -975,11 +1014,14 @@ document.head.appendChild(emailjsScript);
     naam: '@dakotakosmann',
     fotos: [
       maakFoto('images/dakota.jpg', [
+        'cote-x-capri-complete-set-donkerblauw-gold-plated',
         'golden-hour-x-hand-chain-set-navy-gold-plated',
         'golden-hour-ketting-navy-gold-plated',
         'golden-hour-oorbellen-navy-gold-plated',
       ]),
+      
       maakFoto('images/dakota-2.jpg', [
+        'cote-x-capri-complete-set-donkerblauw-gold-plated',
         'golden-hour-x-hand-chain-set-navy-gold-plated',
         'golden-hour-ketting-navy-gold-plated',
         'golden-hour-oorbellen-navy-gold-plated',
@@ -996,12 +1038,13 @@ document.head.appendChild(emailjsScript);
     ],
   };
 
-  // Volgorde: placeholders links, dan Sophia, dan Elisha, dan Ella en Dakota
-  // rechts — zo begint de carrousel met Sophia in het midden, precies zoals
-  // op de homepage. SOPHIA_INDEX wordt via indexOf opgezocht i.p.v. berekend
+  // Volgorde: Sophia, Liv, Elisha, Ella, Dakota, Julie
+  // rechts. Omdat de carrousel circulair is (rondloopt), kom je bij vaak
+  // naar links klikken via de placeholders uiteindelijk gewoon weer bij de
+  // rest uit. SOPHIA_INDEX wordt via indexOf opgezocht i.p.v. berekend
   // vanaf de lengte, zodat het blijft kloppen ongeacht hoeveel mensen er na
   // Sophia in de array staan.
-  const STL_DATA = [sophiaData, elishaData, ellaData, dakotaData, julieData];
+  const STL_DATA = [sophiaData, livData, elishaData, ellaData, dakotaData, julieData];
   const SOPHIA_INDEX = STL_DATA.indexOf(sophiaData);
 
   let stlActiefInfluencer = 0;
