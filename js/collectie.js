@@ -52,7 +52,7 @@
     'capri,côte': 'images/hero-handchains.jpg',
     'côte': 'images/handchain-hero.jpg',
     'capri': 'images/capri-hero.jpg',
-    'azure': 'images/oorbellen-hero.png',
+    'azure': 'images/oorbellen-hero.jpg',
     'soleil': 'images/kettingen-hero.jpg',
   };
 
