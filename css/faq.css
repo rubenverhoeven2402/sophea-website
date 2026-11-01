@@ -156,6 +156,18 @@
   opacity: 0.75;
 }
 
+/* Links in antwoorden: onderstreept zodat duidelijk is dat ze klikbaar zijn */
+.faq-item__content a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color 0.2s;
+}
+
+.faq-item__content a:hover {
+  color: var(--clr-gold);
+}
+
 /* CTA */
 .faq-bottom-cta {
   text-align: center;

@@ -7,10 +7,12 @@
   overflow: hidden;
 }
 
+/* Twee foto's naast elkaar op desktop; op telefoon/tablet alleen de linker. */
 .hero__bg {
   position: absolute;
   inset: 0;
   display: flex;
+  background: var(--clr-text);
 }
 
 .hero__bg img {
@@ -26,8 +28,18 @@
   margin-right: -1px;
 }
 
+/* Rechter foto iets naar beneden: laat meer van de bovenkant zien.
+   Lager percentage = foto verder omlaag, hoger = verder omhoog. */
 .hero__bg img:last-child {
-  object-position: center 50%;
+  object-position: center 30%;
+}
+
+.hero__video {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .hero__content {
@@ -39,67 +51,84 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 4rem;
-  gap: 1.5rem;
-  max-width: 100%;
+  padding: 4rem 5%;
+  gap: 1.25rem;
 }
 
-/* Zachte, gerichte donkere gloed alleen achter het tekstblok — houdt de
-   foto's zelf helder, terwijl de tekst er altijd leesbaar bovenop staat,
-   ongeacht of daaronder een lichte of donkere plek in de foto zit. */
+/* Desktop: zachte donkere gloed achter het tekstblok in het midden. */
 .hero__content::before {
   content: '';
   position: absolute;
   inset: -3rem -6rem;
-  background: radial-gradient(ellipse 55% 65% at center, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 45%, transparent 75%);
+  background: radial-gradient(ellipse 45% 50% at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.25) 45%, transparent 75%);
   z-index: -1;
   pointer-events: none;
 }
 
 .hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   font-family: var(--font-sans);
-  font-size: 0.7rem;
-  letter-spacing: 0.25em;
-  color: rgba(255,255,255,0.8);
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  color: rgba(255,255,255,0.85);
   text-transform: uppercase;
 }
 
 .hero__title {
+  max-width: none;
   font-family: var(--font-serif);
-  font-size: clamp(3rem, 6vw, 6rem);
-  font-weight: 300;
-  line-height: 1.05;
-  letter-spacing: -0.01em;
+  font-size: clamp(2rem, 3.5vw, 3.4rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
   color: #fff;
+  text-wrap: balance;
 }
 
 .hero__sub {
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
+  font-style: italic;
   font-size: 0.95rem;
-  font-weight: 300;
+  font-weight: 400;
   color: rgba(255,255,255,0.85);
-  line-height: 1.7;
+  line-height: 1.5;
+  margin-top: -0.25rem;
 }
 
 .hero__cta {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
   width: fit-content;
-  padding: 1.1rem 2.5rem;
-  border: 1.5px solid #fff;
-  background: rgba(0,0,0,0.2);
-  backdrop-filter: blur(4px);
+  margin-top: 0.5rem;
+  padding: 0.85rem 1.7rem;
+  border: 1px solid rgba(255,255,255,0.85);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   font-family: var(--font-sans);
-  font-size: 0.72rem;
-  font-weight: 300;
+  font-size: 0.65rem;
+  font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #fff;
-  transition: background 0.25s ease, color 0.25s ease;
+  transition: background 0.25s ease, color 0.25s ease, gap 0.25s ease;
+}
+
+.hero__cta::after {
+  content: '→';
+  font-size: 0.9rem;
+  letter-spacing: 0;
 }
 
 .hero__cta:hover {
   background: #fff;
   color: var(--clr-text);
+  gap: 1rem;
 }
 
 .hero__badges {
@@ -310,7 +339,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
-  padding: 0 2.5% 7rem;
+  padding: 0 2.5% 3rem;
 }
 
 .categorie-blok {
@@ -393,6 +422,9 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Laptop: toon meer van de onderkant van de foto.
+     Hoger percentage = meer onderkant, lager = meer bovenkant. */
+  object-position: center 65%;
 }
 
 .brand__text {
@@ -620,18 +652,34 @@
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
-  .hero__bg {
-    flex-direction: column;
-  }
-
-  .hero__bg img {
-    width: 100%;
-    height: 50%;
+  /* Telefoon/tablet: alleen de linker foto, schermvullend */
+  .hero__bg img:last-child {
+    display: none;
   }
 
   .hero__bg img:first-child {
+    width: 100%;
     margin-right: 0;
-    margin-bottom: -1px;
+  }
+
+  /* Telefoon/tablet: tekst linksonder met gloed onderaan de foto */
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to top, rgba(20,10,12,0.65) 0%, rgba(20,10,12,0.3) 35%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero__content {
+    justify-content: flex-end;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .hero__content::before {
+    display: none;
   }
 
   .hero__content {
@@ -676,6 +724,10 @@
     order: 2;
   }
 
+  .brand__img-placeholder img {
+    object-position: center;
+  }
+
   .brand__text {
     padding: 1.5rem 2rem 3rem;
     order: 1;
@@ -706,13 +758,6 @@
     display: none;
   }
 
-  .reviews {
-    padding: 4rem 2rem;
-  }
-
-  .reviews__grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 500px) {
@@ -844,24 +889,467 @@
   }
 
   .hero__content {
-    padding: 2rem 1.5rem;
-    gap: 1rem;
+    padding: 2rem 1.5rem 2.25rem;
+    gap: 0.7rem;
   }
 
   .hero__title {
-    font-size: clamp(2rem, 9vw, 3rem);
+    font-size: clamp(1.6rem, 7vw, 2.1rem);
   }
 
   .hero__sub {
-    font-size: 0.82rem;
+    font-size: 0.85rem;
   }
 
   .hero__cta {
-    padding: 0.9rem 2rem;
-    font-size: 0.65rem;
+    padding: 0.75rem 1.4rem;
+    font-size: 0.6rem;
   }
 
   .hero__eyebrow {
+    font-size: 0.56rem;
+  }
+
+}
+
+/* REVIEWS */
+/* Zorgt dat het hidden-attribuut wint van display: flex/grid hieronder */
+.reviews [hidden] {
+  display: none !important;
+}
+
+.reviews {
+  padding: 2rem 2.5% 5rem;
+}
+
+.reviews__intro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.25rem 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.reviews__titel {
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+
+/* Score-pil in eigen stijl, linkt naar het Trustpilot-profiel */
+.reviews__score {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1.25rem;
+  border: 1px solid var(--clr-border);
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--clr-text);
+  transition: border-color 0.2s ease;
+}
+
+.reviews__score-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.4rem;
+}
+
+.reviews__bijgewerkt {
+  padding-right: 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 300;
+  opacity: 0.55;
+}
+
+.reviews__score:hover {
+  border-color: var(--clr-gold);
+}
+
+.reviews__score strong {
+  font-weight: 500;
+}
+
+.reviews__score-tekst,
+.reviews__score-bron {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Sterren (SVG): lege rij met daarover een gouden rij die tot de score loopt */
+.sterren {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--clr-border);
+}
+
+.sterren__rij {
+  display: flex;
+  gap: 2px;
+  width: max-content;
+}
+
+.sterren svg {
+  display: block;
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.sterren__vulling {
+  position: absolute;
+  inset: 0 auto 0 0;
+  overflow: hidden;
+  color: var(--clr-gold);
+}
+
+.reviews__trustpilot {
+  font-weight: 500;
+}
+
+.reviews__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.review {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  background: var(--clr-card); /* wit: #fff */
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.review__kop {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.review__avatar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: #fff; /* bij witte kaarten: var(--clr-card) */
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.review__naam {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.review__datum {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 300;
+  opacity: 0.55;
+}
+
+.review__titel {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.review__tekst {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+.review__geverifieerd {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 300;
+  opacity: 0.7;
+}
+
+.review__geverifieerd svg {
+  color: var(--clr-gold);
+}
+
+.reviews__leeg {
+  max-width: 46ch;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.6;
+}
+
+.reviews__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.reviews__knop,
+.reviews__link {
+  display: inline-block;
+  min-width: 15rem;
+  padding: 0.85rem 1.75rem;
+  border: 1px solid var(--clr-text);
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.reviews__knop:hover,
+.reviews__link:hover {
+  background: var(--clr-gold);
+  border-color: var(--clr-gold);
+  color: var(--clr-text);
+}
+
+/* Tweede knop gevuld, zodat de twee knoppen van elkaar te onderscheiden zijn */
+.reviews__link {
+  background: var(--clr-text);
+  color: var(--clr-bg);
+}
+
+@media (max-width: 900px) {
+  .reviews {
+    padding: 3.5rem 0 4rem;
+  }
+
+  .reviews__intro,
+  .reviews__leeg,
+  .reviews__footer {
+    padding: 0 2rem;
+  }
+
+  /* Op telefoon/tablet: kaarten horizontaal swipen */
+  .reviews__grid {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 2rem;
+    padding: 0.5rem 2rem 1.5rem;
+    margin: -0.5rem 0 -1.5rem;
+    scrollbar-width: none;
+  }
+
+  .reviews__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .review {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .reviews__intro,
+  .reviews__leeg,
+  .reviews__footer {
+    padding: 0 1.25rem;
+  }
+
+  .reviews__grid {
+    padding: 0.5rem 1.25rem 1.5rem;
+    scroll-padding: 0 1.25rem;
+  }
+
+  .reviews__score {
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .reviews__score-wrap {
+    align-items: flex-start;
+  }
+
+  .reviews__bijgewerkt {
+    padding: 0 0 0 1rem;
+  }
+
+  /* Op telefoon kleiner naast elkaar, allebei even breed */
+  .reviews__footer {
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+  }
+
+  .reviews__knop,
+  .reviews__link {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0.75rem 0.5rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+}
+
+/* CADEAUGIDS (feestdagen) */
+.cadeaugids[hidden],
+.cadeaugids__tab[hidden] {
+  display: none !important;
+}
+
+.cadeaugids {
+  padding: 5rem 2.5%;
+  background: #271018;
+  color: var(--clr-bg);
+}
+
+.cadeaugids__intro {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.cadeaugids__titel {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+
+.cadeaugids__sub {
+  margin-top: 0.5rem;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  opacity: 0.75;
+}
+
+.cadeaugids__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.cadeaugids__tab {
+  padding: 0.65rem 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--clr-bg);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.cadeaugids__tab:hover {
+  border-color: var(--clr-gold);
+}
+
+.cadeaugids__tab--actief,
+.cadeaugids__tab--actief:hover {
+  background: var(--clr-bg);
+  border-color: var(--clr-bg);
+  color: #271018;
+}
+
+/* Productkaarten en link licht op de donkere achtergrond */
+.cadeaugids .product-card {
+  background: transparent;
+}
+
+.cadeaugids .product-card__naam,
+.cadeaugids .product-card__prijs,
+.cadeaugids .product-card__kleuren {
+  color: var(--clr-bg);
+}
+
+.cadeaugids .product-card__prijs--uitverkocht {
+  color: var(--clr-bg);
+  opacity: 0.6;
+}
+
+.cadeaugids .collectie__link {
+  color: var(--clr-bg);
+  border-color: var(--clr-bg);
+}
+
+.cadeaugids .collectie__link:hover {
+  color: var(--clr-gold);
+  border-color: var(--clr-gold);
+}
+
+.cadeaugids__tab:focus-visible {
+  outline: 2px solid var(--clr-gold);
+  outline-offset: 2px;
+}
+
+.cadeaugids__footer {
+  text-align: center;
+  margin-top: 2.5rem;
+}
+
+@media (max-width: 900px) {
+  .cadeaugids {
+    padding: 4rem 2rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .cadeaugids {
+    padding: 3rem 0 2.5rem;
+  }
+
+  .cadeaugids__intro,
+  .cadeaugids__tabs {
+    padding: 0 1.25rem;
+  }
+
+  .cadeaugids__tabs {
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cadeaugids__tab {
+    padding: 0.55rem 1rem;
     font-size: 0.62rem;
+    letter-spacing: 0.08em;
+  }
+
+  .cadeaugids__footer {
+    margin-top: 1.25rem;
   }
 }
