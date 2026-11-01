@@ -1195,3 +1195,55 @@
     right: 0.75rem;
   }
 }
+
+/* KLEURBOLLETJES — veel kleuren */
+
+/* De infokolom mag smaller worden dan zijn inhoud. Zonder dit trekt een
+   lange rij bolletjes de hele kolom (titel, knoppen) breder dan het scherm. */
+.product__info,
+#productKleuren {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Laptop: bolletjes lopen door naar een volgende regel */
+.product__kleuren-opties {
+  flex-wrap: wrap;
+}
+
+.product__kleur-dot {
+  flex: 0 0 auto;
+}
+
+/* Telefoon: één rij die je horizontaal swipet */
+@media (max-width: 600px) {
+  .product__kleuren-opties {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* ruimte zodat schaduw en de rand van het actieve bolletje niet
+       worden afgesneden */
+    padding: 6px 2px 8px;
+    margin: -6px -2px calc(1.5rem - 8px);
+    /* zachte vervaging rechts: laat zien dat er meer kleuren zijn */
+    -webkit-mask-image: linear-gradient(to right, #000 85%, transparent);
+            mask-image: linear-gradient(to right, #000 85%, transparent);
+  }
+
+  /* Extra ruimte aan het einde, zodat het laatste bolletje voorbij de
+     vervaging kan scrollen en helemaal zichtbaar wordt */
+  .product__kleuren-opties::after {
+    content: '';
+    flex: 0 0 2.5rem;
+  }
+
+  .product__kleuren-opties::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product__kleur-dot {
+    scroll-snap-align: start;
+  }
+}
