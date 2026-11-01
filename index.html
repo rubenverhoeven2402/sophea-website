@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6RP06B7510"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag("js", new Date());
-
-    gtag("config", "G-6RP06B7510");
-  </script>
-  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -33,8 +23,8 @@
   <script src="js/intro.js"></script>
 
   <div class="sale-balk">
-        <p class="sale-balk__vol"> Gratis verzending op bestellingen vanaf <strong>€50</strong></p>
-        <p class="sale-balk__kort">Gratis verzending op bestellingen vanaf <strong>€50</strong></p>
+        <p class="sale-balk__vol">De <strong>herfstdrop</strong> is live! Shop nu de nieuwe collectie</p>
+        <p class="sale-balk__kort">De <strong>herfstdrop</strong> is live! Shop nu de nieuwe collectie</p>
   </div>
 
   <header class="nav">
@@ -216,13 +206,13 @@
     <!-- HERO -->
     <section class="hero">
       <div class="hero__bg">
-        <img src="images/handchain-hero.jpg" alt="SOPHÉA hand chain" />
-        <img src="images/handchain-hero-2.jpg" alt="SOPHÉA hand chain" />
+        <img src="images/herfst-links.jpg" alt="SOPHÉA hand chain" />
+        <img src="images/herfst-rechts.jpg" alt="SOPHÉA hand chain" />
       </div>
       <div class="hero__content">
-        <p class="hero__eyebrow">'T GOOI - HANDMADE</p>
-        <h1 class="hero__title">Jouw nazomer, een beetje goudkleuriger.</h1>
-        <p class="hero__sub">Handgemaakte sieraden<br>Chique, tijdloos en volledig uniek.</p>
+        <p class="hero__eyebrow">Nieuwe collectie live!</p>
+        <h1 class="hero__title">Jouw nieuwe favoriet<br>voor dit seizoen</h1>
+        <p class="hero__sub">Ontdek de nieuwe herfstcollectie.</p>
         <a href="collectie.html" class="hero__cta">BEKIJK COLLECTIE</a>
       </div>
     </section>
@@ -262,33 +252,33 @@
         <span class="usp-bar__dot"></span>
     </div>
 
-    <!-- COLLECTIE -->
+    <!-- NIEUW -->
     <section class="collectie">
       <div class="collectie__intro">
-        <h2 class="collectie__title">Hand chains</h2>
+        <h2 class="collectie__title">Nieuw</h2>
         <div class="collectie__divider"></div>
       </div>
         <div class="collectie__grid" id="featuredGrid">
         </div>
       <div class="collectie__footer">
-        <a href="collectie.html?categorie=handchains" class="collectie__link">Bekijk alle stukken</a>
+        <a href="collectie.html?categorie=nieuw" class="collectie__link">Bekijk alles wat nieuw is</a>
       </div>
     </section>
 
     <!-- SFEERBANNERS -->
     <section class="sfeerbanners">
       <a href="collectie.html?collectie=côte,capri" class="sfeerbanner">
-        <img src="images/cotexcapri.jpg" alt="Côte x Capri collectie" />
+        <img src="images/eclatxriviera.jpg" alt="Côte x Capri collectie" />
         <div class="sfeerbanner__tekst">
-          <p class="sfeerbanner__kicker">Côte x Capri</p>
+          <p class="sfeerbanner__kicker">Éclat x Riviera</p>
           <p class="sfeerbanner__titel">Ontdek de collectie</p>
         </div>
       </a>
-      <a href="collectie.html?categorie=bestsellers" class="sfeerbanner">
-        <img src="images/zomertrend.jpg" alt="Zomercollectie" />
+      <a href="collectie.html?categorie=nieuw" class="sfeerbanner">
+        <img src="images/herfst-sophea.jpg" alt="SOPHÉA herfstcollectie" />
         <div class="sfeerbanner__tekst">
-          <p class="sfeerbanner__kicker">Zomer in goud</p>
-          <p class="sfeerbanner__titel">Shop de zomertrend</p>
+          <p class="sfeerbanner__kicker">Herfst in goud</p>
+          <p class="sfeerbanner__titel">Shop de herfstcollectie</p>
         </div>
       </a>
     </section>
@@ -319,7 +309,7 @@
       </a>
       <a href="collectie.html?categorie=kettingen" class="categorie-blok">
         <div class="categorie-blok__img">
-          <img src="images/kettingen-hero.jpg" alt="Kettingen" />
+          <img src="images/kettingen.jpg" alt="Kettingen" />
         </div>
         <div class="categorie-blok__tekst">
           <h3>KETTINGEN</h3>
@@ -337,13 +327,27 @@
       </a>
       <a href="collectie.html?categorie=sets" class="categorie-blok">
         <div class="categorie-blok__img">
-            <img src="images/sets.jpeg" alt="Sets" />
+            <img src="images/sets.jpg" alt="Sets" />
         </div>
         <div class="categorie-blok__tekst">
             <h3>SETS</h3>
             <span>Ontdek alle sets</span>
         </div>
       </a>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="reviews" id="reviews" aria-labelledby="reviewsTitel">
+      <div class="reviews__intro">
+        <h2 class="reviews__titel" id="reviewsTitel">Wat klanten zeggen</h2>
+        <a class="reviews__score" id="reviewsScore" target="_blank" rel="noopener" hidden></a>
+      </div>
+      <ul class="reviews__grid" id="reviewsGrid" hidden></ul>
+      <p class="reviews__leeg" id="reviewsLeeg" hidden>Draag je al een SOPHÉA-sieraad? We horen graag wat je ervan vindt.</p>
+      <div class="reviews__footer">
+        <a class="reviews__knop" id="reviewsKnop" href="https://nl.trustpilot.com/evaluate/sophea.nl" target="_blank" rel="noopener">Schrijf een review</a>
+        <a class="reviews__link" id="reviewsLink" target="_blank" rel="noopener" hidden>Schrijf zelf een review</a>
+      </div>
     </section>
 
     <!-- BRAND -->
@@ -356,6 +360,23 @@
         <h2 class="brand__title">Gemaakt met zorg,<br>gedragen met trots.</h2>
         <p class="brand__body">Elk stuk begint met een idee en eindigt als iets unieks om jouw hand. SOPHÉA sieraden worden met de hand gemaakt in 't Gooi, van stainless steel dat niet verkleurt en altijd mooi blijft.</p>
         <a href="over-mij.html" class="brand__cta">Lees meer</a>
+      </div>
+    </section>
+
+    <!-- CADEAUGIDS (feestdagen) -->
+    <section class="cadeaugids" id="cadeaugids" aria-labelledby="cadeaugidsTitel" hidden>
+      <div class="cadeaugids__intro">
+        <h2 class="cadeaugids__titel" id="cadeaugidsTitel">Cadeautips voor de feestdagen</h2>
+        <p class="cadeaugids__sub">Voor Sinterklaas, kerst, of gewoon voor jezelf.</p>
+      </div>
+      <div class="cadeaugids__tabs" role="tablist" aria-label="Cadeautips">
+        <button class="cadeaugids__tab" role="tab" id="cadeauTab-onder30" data-groep="onder30" aria-controls="cadeaugidsGrid">Onder €30</button>
+        <button class="cadeaugids__tab" role="tab" id="cadeauTab-onder50" data-groep="onder50" aria-controls="cadeaugidsGrid">Onder €50</button>
+        <button class="cadeaugids__tab" role="tab" id="cadeauTab-sets" data-groep="sets" aria-controls="cadeaugidsGrid">Complete sets</button>
+      </div>
+      <div class="collectie__grid cadeaugids__grid" id="cadeaugidsGrid" role="tabpanel"></div>
+      <div class="cadeaugids__footer">
+        <a href="collectie.html" class="collectie__link" id="cadeaugidsLink">Bekijk alle sieraden</a>
       </div>
     </section>
 
@@ -562,6 +583,7 @@
   <script src="js/nav.js"></script>
   <script src="js/account.js"></script>
   <script src="js/homepage.js"></script>
+  <script src="js/reviews.js"></script>
   <script src="js/nieuwsbrief.js"></script>
   <script src="js/welkomstpopup.js"></script>
 </body>
