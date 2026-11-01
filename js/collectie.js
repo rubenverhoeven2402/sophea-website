@@ -37,23 +37,30 @@
     'handchains': 'Hand chains', 'kettingen': 'Kettingen',
     'oorbellen': 'Oorbellen', 'ringen': 'Ringen',
     'combi': 'Sets', 'nieuw': 'Nieuw',
-    'bestsellers': 'Bestsellers',
+    'bestsellers': 'Bestsellers', 'armbanden': 'Armbanden',
   };
 
   const heroAfbeeldingen = {
-    'all': 'images/alles-hero.jpg',
+    'all': 'images/sets-hero.jpg',
     'handchains': 'images/hero-handchains.jpg',
     'kettingen': 'images/kettingen-hero.jpg',
     'oorbellen': 'images/oorbellen-hero.jpg',
     'combi': 'images/sets-hero.jpg',
-    'nieuw': 'images/alles-hero.jpg',
+    'nieuw': 'images/sets-hero.jpg',
     'bestsellers': 'images/bestsellers-hero.jpg',
     'côte,capri': 'images/hero-handchains.jpg',
     'capri,côte': 'images/hero-handchains.jpg',
-    'côte': 'images/handchain-hero.jpg',
+    'côte': 'images/cote-hero.jpg',
     'capri': 'images/capri-hero.jpg',
-    'azure': 'images/oorbellen-hero.jpg',
-    'soleil': 'images/kettingen-hero.jpg',
+    'azure': 'images/azure-hero.jpg',
+    'soleil': 'images/soleil-hero.jpg',
+    'armbanden': 'images/armbanden-hero.jpg',
+    'lune': 'images/lune-hero.jpg',   
+    'elara': 'images/elara-hero.jpg',
+    'éclat': 'images/eclat-hero.jpg',
+    'eclat': 'images/eclat-hero.jpg', 
+    'riviera': 'images/riviera-hero.jpg',
+    'lumi': 'images/lumi-hero.jpg',
   };
 
   // Standaard wordt een hero-foto gecentreerd getoond (background-position:
@@ -72,6 +79,14 @@
     'soleil': 'center 80%',
     'kettingen': 'center 80%',
     'combi': 'center 65%',
+    // Pas per herfstcollectie aan als het sieraad lager of hoger in de foto
+    // staat, bv. 'center 70%' (meer onderkant) of 'center 30%' (meer bovenkant).
+    'lune': 'center 80%',
+    'elara': 'center',
+    'éclat': 'center',
+    'eclat': 'center',
+    'riviera': 'center',
+    'lumi': 'center',
   };
 
   function zetHeroAfbeelding(key) {
@@ -422,6 +437,7 @@
       mint: ['#a9e8d4', '#3fa98a'],
       mintgroen: ['#a9e8d4', '#3fa98a'],
       paars: ['#c9a8e0', '#6b3fa0'],
+      aubergine: ['#8e5a80', '#3d1a35'],
       purple: ['#c9a8e0', '#6b3fa0'],
       lila: ['#c9a8e0', '#6b3fa0'],
       bruin: ['#c9a374', '#6b4423'],

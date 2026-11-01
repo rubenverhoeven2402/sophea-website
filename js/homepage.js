@@ -26,7 +26,7 @@
     return groep.length > 1 ? groep.length : null;
   }
 
-  // FEATURED GRID (bovenaan homepage, "DE COLLECTIE")
+  // PRODUCTKAARTEN
   // Herbruikbare productkaart-HTML — gebruikt door zowel de featured grid
   // (bovenaan) als de nieuwe bestsellers-grid, zodat ze er identiek uitzien.
   function productKaartHTML(p) {
@@ -67,27 +67,40 @@
     `;
   }
 
+  // NIEUW (bovenaan de homepage)
+  // Toont producten met de tag "badge:nieuw" in Shopify.
+  //
+  // Wil je zelf kiezen welke nieuwe producten hier staan (en in welke
+  // volgorde)? Zet dan hun handles in deze lijst. Laat je hem leeg, dan
+  // worden automatisch de eerste 4 producten met "badge:nieuw" getoond.
+  const NIEUW_OP_HOMEPAGE = [
+    // 'voorbeeld-handle-van-product',
+  ];
+
   function renderFeaturedGrid() {
     const grid = document.getElementById('featuredGrid');
     if (!grid) return;
 
-    // Alleen hand chains in deze sectie — anders kan een bestseller uit een
-    // andere categorie (bv. oorbellen) hier per ongeluk tussen komen staan.
-    const handChains = PRODUCTS.filter(p => p.categorie === 'handchains');
+    const isNieuw = (p) => p.badges && p.badges.includes('nieuw');
+    const nieuweProducten = PRODUCTS.filter(isNieuw);
 
-    // Vaste volgorde: eerst de bestseller, dan turquoise, roze, blauw (niet navy)
-    const bestseller = handChains.find(p => p.badge === 'bestseller');
-    const turquoise = handChains.find(p => p.kleur === 'turquoise');
-    const roze = handChains.find(p => p.kleur === 'roze');
-    const blauw = handChains.find(p => p.kleur === 'blauw');
+    // Eerst de gekozen handles (in jouw volgorde), alleen als ze bestaan.
+    let featured = NIEUW_OP_HOMEPAGE
+      .map(handle => PRODUCTS.find(p => p.handle === handle))
+      .filter(Boolean);
 
-    let featured = [bestseller, turquoise, roze, blauw].filter(Boolean);
-
-    // Vul aan met overige hand chains als er (nog) minder dan 4 matches zijn
+    // Aanvullen met andere nieuwe producten tot er 4 staan.
     if (featured.length < 4) {
-      const restProducten = handChains.filter(p => !featured.includes(p));
-      featured = featured.concat(restProducten.slice(0, 4 - featured.length));
+      const rest = nieuweProducten.filter(p => !featured.includes(p));
+      featured = featured.concat(rest.slice(0, 4 - featured.length));
     }
+
+    // Nog geen enkel nieuw product (bv. tussen twee drops in)? Dan
+    // tonen we de bestsellers, zodat dit blok nooit leeg is.
+    if (featured.length === 0) {
+      featured = PRODUCTS.filter(p => p.badges && p.badges.includes('bestseller')).slice(0, 4);
+    }
+
     grid.innerHTML = featured.map(productKaartHTML).join('');
     sopheaWishlistKnoppenBinden(grid);
   }
@@ -103,6 +116,111 @@
     sopheaWishlistKnoppenBinden(grid);
   }
   renderBestsellersGrid();
+
+  // CADEAUGIDS (boven de #SOPHÉA-carrousel)
+  // Drie tabbladen met producten uit de nieuwe collectie (badge:nieuw),
+  // elke keer in een andere volgorde. Na CADEAUGIDS_TOT
+  // verdwijnt het blok vanzelf, dus na de feestdagen hoef je niets te doen.
+  // Wil je hem eerder weg: zet CADEAUGIDS_AAN op false.
+  const CADEAUGIDS_AAN = true;
+  const CADEAUGIDS_TOT = '2026-12-26';
+
+  const CADEAU_GROEPEN = {
+    onder30: {
+      // Staat altijd vooraan, ook al is het geen nieuw product (bestseller).
+      // Het begin van de handle is genoeg, bv. 'azure-oorbellen-helder'.
+      vast: ['azure-oorbellen-helder'],
+      filter: p => p.prijs < 30,
+      link: 'collectie.html',
+      linkTekst: 'Bekijk alle sieraden',
+    },
+    onder50: {
+      filter: p => p.prijs >= 30 && p.prijs < 50,
+      link: 'collectie.html',
+      linkTekst: 'Bekijk alle sieraden',
+    },
+    sets: {
+      // Alleen echte complete sets (ketting + oorbellen + hand chain), niet
+      // de losse hand chain sets die ook de categorie "sets" hebben.
+      filter: p => /complete-set|voordeelset/.test(p.handle),
+      link: 'collectie.html?categorie=sets',
+      linkTekst: 'Bekijk alle sets',
+    },
+  };
+
+  function renderCadeaugids() {
+    const sectie = document.getElementById('cadeaugids');
+    if (!sectie) return;
+    if (!CADEAUGIDS_AAN || new Date() > new Date(CADEAUGIDS_TOT + 'T23:59:59')) return;
+
+    const grid = document.getElementById('cadeaugidsGrid');
+    const link = document.getElementById('cadeaugidsLink');
+    const isNieuw = p => p.badges && p.badges.includes('nieuw');
+
+    // Husselt een lijst door elkaar (Fisher-Yates), zodat bij elk bezoek
+    // andere nieuwe producten bovenaan staan.
+    const hussel = (lijst) => {
+      const kopie = [...lijst];
+      for (let i = kopie.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [kopie[i], kopie[j]] = [kopie[j], kopie[i]];
+      }
+      return kopie;
+    };
+
+    // Per groep max 4 beschikbare producten uit de nieuwe collectie
+    // (tag "badge:nieuw"), in willekeurige volgorde
+    const producten = {};
+    // Vaste producten eerst (als ze bestaan en op voorraad zijn), daarna
+    // aangevuld met willekeurige nieuwe producten tot er 4 staan.
+    const vindVast = (begin) => PRODUCTS.find(p => p.handle === begin || p.handle.startsWith(begin + '-'));
+    Object.entries(CADEAU_GROEPEN).forEach(([naam, groep]) => {
+      const vast = (groep.vast || [])
+        .map(vindVast)
+        .filter(p => p && p.beschikbaar !== false);
+      const lijst = PRODUCTS.filter(p => p.beschikbaar !== false && isNieuw(p) && groep.filter(p) && !vast.includes(p));
+      producten[naam] = [...vast, ...hussel(lijst)].slice(0, 4);
+    });
+
+    // Tabbladen zonder producten verbergen
+    const tabs = [...sectie.querySelectorAll('.cadeaugids__tab')]
+      .filter(tab => {
+        const leeg = producten[tab.dataset.groep].length === 0;
+        tab.hidden = leeg;
+        return !leeg;
+      });
+    if (tabs.length === 0) return;
+
+    function toonGroep(tab) {
+      const naam = tab.dataset.groep;
+      tabs.forEach(t => {
+        const actief = t === tab;
+        t.classList.toggle('cadeaugids__tab--actief', actief);
+        t.setAttribute('aria-selected', actief ? 'true' : 'false');
+        t.tabIndex = actief ? 0 : -1;
+      });
+      grid.setAttribute('aria-labelledby', tab.id);
+      grid.innerHTML = producten[naam].map(productKaartHTML).join('');
+      sopheaWishlistKnoppenBinden(grid);
+      link.href = CADEAU_GROEPEN[naam].link;
+      link.textContent = CADEAU_GROEPEN[naam].linkTekst;
+    }
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => toonGroep(tab));
+      // Pijltjestoetsen tussen de tabbladen
+      tab.addEventListener('keydown', e => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        const volgende = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
+        volgende.focus();
+        toonGroep(volgende);
+      });
+    });
+
+    toonGroep(tabs[0]);
+    sectie.hidden = false;
+  }
+  renderCadeaugids();
 
   // SHOP THE LOOK DATA (producten dynamisch, foto's/influencers blijven placeholder)
   //
@@ -124,26 +242,47 @@
     naam: '@sophiavandoornik',
     fotos: [
       maakFoto('images/sophia-1.jpg', [
+        'capri-complete-set-helder-gold-plated',
         'golden-hour-ketting-helder-gold-plated',
         'capri-hand-chain-helder-gold-plated',
         'golden-hour-oorbellen-helder-gold-plated',
       ]),
       maakFoto('images/sophia-2-nieuw.jpg', [
+        'capri-complete-set-helder-gold-plated',
         'golden-hour-ketting-helder-gold-plated',
         'capri-hand-chain-helder-gold-plated',
         'golden-hour-oorbellen-helder-gold-plated',
       ]),
       maakFoto('images/sophia-3.jpg', [
+        'capri-complete-set-helder-gold-plated',
         'golden-hour-ketting-helder-gold-plated',
         'capri-hand-chain-helder-gold-plated',
         'golden-hour-oorbellen-helder-gold-plated',
       ]),
       maakFoto('images/sophia.jpg', ['golden-hour-x-hand-chain-set-helder-gold-plated']),
       maakFoto('images/sophia-2.jpg', [
+        'golden-hour-voordeelset-blauw-gold-plated',
         'golden-hour-handchain-blauw-gold-plated',
         'golden-hour-ketting-blauw-gold-plated',
         'golden-hour-oorbellen-blauw-gold-plated',
-        'golden-hour-voordeelset-blauw-gold-plated',
+      ]),
+    ],
+  };
+
+  const livData = {
+    naam: '@livkortmann',
+    fotos: [
+      maakFoto('images/liv-1.jpg', [
+        'cote-x-capri-complete-set-roze-gold-plated',
+        'golden-hour-x-hand-chain-set-roze-gold-plated',
+        'golden-hour-oorbellen-roze-gold-plated',
+        'golden-hour-ketting-roze-gold-plated',
+      ]),
+      maakFoto('images/liv-2.jpg', [
+        'cote-x-capri-complete-set-roze-gold-plated',
+        'golden-hour-x-hand-chain-set-roze-gold-plated',
+        'golden-hour-oorbellen-roze-gold-plated',
+        'golden-hour-ketting-roze-gold-plated',
       ]),
     ],
   };
@@ -151,6 +290,7 @@
   const elishaData = {
     naam: '@elishatenkate',
     fotos: [
+      maakFoto('images/elisha-1-nieuwste.jpg', ['capri-hand-chain-helder-gold-plated']),
       maakFoto('images/elisha-1-nieuw.jpg', [
         'golden-hour-voordeelset-navy-gold-plated',
         'capri-hand-chain-navy-gold-plated',
@@ -162,12 +302,14 @@
         'golden-hour-oorbellen-navy-gold-plated',
       ]),
       maakFoto('images/elisha.jpeg', [
+        'cote-x-capri-complete-set-roze-gold-plated',
         'golden-hour-ketting-roze-gold-plated',
         'golden-hour-oorbellen-roze-gold-plated',
         'golden-hour-x-hand-chain-set-roze-gold-plated',
       ]),
       maakFoto('images/elisha-2.jpg', [
-        'golden-hour-x-hand-chain-set-navy-gold-plated',
+        'golden-hour-voordeelset-navy-gold-plated',
+        'capri-hand-chain-navy-gold-plated',
         'golden-hour-ketting-navy-gold-plated',
         'golden-hour-oorbellen-navy-gold-plated',
       ]),
@@ -178,12 +320,14 @@
     naam: '@ellaverhagen_',
     fotos: [
       maakFoto('images/ella-2.jpg', [
+        'cote-x-capri-complete-set-turquoise-gold-plated',
         'golden-hour-x-hand-chain-set-turquoise-gold-plated',
         'golden-hour-ketting-turquoise-gold-plated',
         'golden-hour-oorbellen-turquoise-gold-plated',
       ]),
 
       maakFoto('images/ella.jpg', [
+        'cote-x-capri-complete-set-turquoise-gold-plated',
         'golden-hour-x-hand-chain-set-turquoise-gold-plated',
         'golden-hour-ketting-turquoise-gold-plated',
         'golden-hour-oorbellen-turquoise-gold-plated',
@@ -196,12 +340,14 @@
     naam: '@dakotakosmann',
     fotos: [
       maakFoto('images/dakota.jpg', [
+        'cote-x-capri-complete-set-donkerblauw-gold-plated',
         'golden-hour-x-hand-chain-set-navy-gold-plated',
         'golden-hour-ketting-navy-gold-plated',
         'golden-hour-oorbellen-navy-gold-plated',
       ]),
       
       maakFoto('images/dakota-2.jpg', [
+        'cote-x-capri-complete-set-donkerblauw-gold-plated',
         'golden-hour-x-hand-chain-set-navy-gold-plated',
         'golden-hour-ketting-navy-gold-plated',
         'golden-hour-oorbellen-navy-gold-plated',
@@ -218,14 +364,32 @@
     ],
   };
 
-  // Volgorde: placeholders links, dan Sophia, dan Elisha, dan Ella en Dakota
+  // Volgorde: Sophia, Liv, Elisha, Ella, Dakota, Julie
   // rechts. Omdat de carrousel circulair is (rondloopt), kom je bij vaak
   // naar links klikken via de placeholders uiteindelijk gewoon weer bij de
   // rest uit. SOPHIA_INDEX wordt via indexOf opgezocht i.p.v. berekend
   // vanaf de lengte, zodat het blijft kloppen ongeacht hoeveel mensen er na
   // Sophia in de array staan.
-  const STL_DATA = [sophiaData, elishaData, ellaData, dakotaData, julieData];
-  const SOPHIA_INDEX = STL_DATA.indexOf(sophiaData);
+  const marysseData = {
+    naam: '@marysse.dw',
+    fotos: [
+      maakFoto('images/marysse-1.jpg', ['golden-hour-x-hand-chain-set-helder-gold-plated']),
+      maakFoto('images/marysse-2.jpg', ['golden-hour-x-hand-chain-set-helder-gold-plated', 'lumi-hand-chain-bordeaux']),
+      maakFoto('images/marysse-3.jpg', ['golden-hour-x-hand-chain-set-helder-gold-plated', 'lumi-hand-chain-bordeaux']),
+    ],
+  };
+
+  const elineData = {
+    naam: '@elineewijerss',
+    fotos: [
+      maakFoto('images/eline-1.jpg', ['cote-hand-chain-bruin-gold-plated']),
+      maakFoto('images/eline-2.jpg', ['cote-hand-chain-bruin-gold-plated']),
+    ],
+  };
+
+  const STL_DATA = [elineData, julieData, sophiaData, elishaData, ellaData, dakotaData, livData, marysseData];
+  // De carrousel begint bij de eerste persoon in STL_DATA.
+  const START_INDEX = 0;
 
   let stlActiefInfluencer = 0;
   let stlActiefFoto = 0;
@@ -237,7 +401,7 @@
   // je dat spronggetje nooit. Zo voelt de carrousel echt oneindig aan.
   const HERHALINGEN = 3;
   const RENDER_ITEMS = Array(HERHALINGEN).fill(STL_DATA).flat();
-  let stlRenderIndex = STL_DATA.length + SOPHIA_INDEX; // start in de middelste kopie
+  let stlRenderIndex = STL_DATA.length + START_INDEX; // start in de middelste kopie
 
   function renderCarrousel() {
     const carrousel = document.getElementById('stlCarrousel');

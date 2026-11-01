@@ -21,7 +21,7 @@ const KLEUR_GROEPEN = {
   oranje: 'oranje', orange: 'oranje',
   geel: 'geel', yellow: 'geel',
   groen: 'groen', green: 'groen', mint: 'groen', mintgroen: 'groen',
-  paars: 'paars', purple: 'paars', lila: 'paars',
+  paars: 'paars', purple: 'paars', lila: 'paars', aubergine: 'paars',
   bruin: 'bruin', brown: 'bruin',
   beige: 'beige', creme: 'beige', ivoor: 'beige', ivory: 'beige',
   grijs: 'grijs', gray: 'grijs', grey: 'grijs',

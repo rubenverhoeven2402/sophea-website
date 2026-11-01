@@ -355,7 +355,10 @@ document.head.appendChild(emailjsScript);
       groen: ['#8fd4a8', '#2f7a4f'], green: ['#8fd4a8', '#2f7a4f'],
       mint: ['#a9e8d4', '#3fa98a'], mintgroen: ['#a9e8d4', '#3fa98a'],
       paars: ['#c9a8e0', '#6b3fa0'], purple: ['#c9a8e0', '#6b3fa0'], lila: ['#c9a8e0', '#6b3fa0'],
+      aubergine: ['#8e5a80', '#3d1a35'],
       bruin: ['#c9a374', '#6b4423'], brown: ['#c9a374', '#6b4423'],
+      amber: ['#e0a04a', '#a3591a'], camel: ['#d3a86a', '#8a5a28'],
+      olijfgroen: ['#b7b56a', '#5f5d2e'], olijf: ['#b7b56a', '#5f5d2e'], olive: ['#b7b56a', '#5f5d2e'],
       beige: ['#e8ddc8', '#b8a279'],
       grijs: ['#d4d4d4', '#7a7a7a'], gray: ['#d4d4d4', '#7a7a7a'], grey: ['#d4d4d4', '#7a7a7a'],
       goud: ['#f5e6c8', '#c9a96e'], gold: ['#f5e6c8', '#c9a96e'],
@@ -1025,8 +1028,26 @@ document.head.appendChild(emailjsScript);
   // rest uit. SOPHIA_INDEX wordt via indexOf opgezocht i.p.v. berekend
   // vanaf de lengte, zodat het blijft kloppen ongeacht hoeveel mensen er na
   // Sophia in de array staan.
-  const STL_DATA = [sophiaData, elishaData, ellaData, dakotaData, julieData];
-  const SOPHIA_INDEX = STL_DATA.indexOf(sophiaData);
+  const marysseData = {
+    naam: '@marysse.dw',
+    fotos: [
+      maakFoto('images/marysse-1.jpg', ['golden-hour-x-hand-chain-set-helder-gold-plated']),
+      maakFoto('images/marysse-2.jpg', ['golden-hour-x-hand-chain-set-helder-gold-plated', 'lumi-hand-chain-bordeaux']),
+      maakFoto('images/marysse-3.jpg', ['golden-hour-x-hand-chain-set-helder-gold-plated', 'lumi-hand-chain-bordeaux']),
+    ],
+  };
+
+  const elineData = {
+    naam: '@elineewijerss',
+    fotos: [
+      maakFoto('images/eline-1.jpg', ['cote-hand-chain-bruin-gold-plated']),
+      maakFoto('images/eline-2.jpg', ['cote-hand-chain-bruin-gold-plated']),
+    ],
+  };
+
+  const STL_DATA = [elineData, julieData, sophiaData, elishaData, ellaData, dakotaData, marysseData];
+  // De carrousel begint bij de eerste persoon in STL_DATA.
+  const START_INDEX = 0;
 
   let stlActiefInfluencer = 0;
   let stlActiefFoto = 0;
@@ -1038,7 +1059,7 @@ document.head.appendChild(emailjsScript);
   // je dat spronggetje nooit. Zo voelt de carrousel echt oneindig aan.
   const STL_HERHALINGEN = 3;
   const STL_RENDER_ITEMS = Array(STL_HERHALINGEN).fill(STL_DATA).flat();
-  let stlRenderIndex = STL_DATA.length + SOPHIA_INDEX; // start bij Sophia, in de middelste kopie
+  let stlRenderIndex = STL_DATA.length + START_INDEX; // start bij de eerste persoon, in de middelste kopie
 
   function renderCarrousel() {
     const carrousel = document.getElementById('stlCarrousel');
