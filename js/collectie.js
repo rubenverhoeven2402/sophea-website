@@ -41,12 +41,12 @@
   };
 
   const heroAfbeeldingen = {
-    'all': 'images/sets-hero.jpg',
+    'all': 'images/riviera-hero.jpg',
     'handchains': 'images/hero-handchains.jpg',
     'kettingen': 'images/kettingen-hero.jpg',
     'oorbellen': 'images/oorbellen-hero.jpg',
-    'combi': 'images/sets-hero.jpg',
-    'nieuw': 'images/sets-hero.jpg',
+    'combi': 'images/riviera-hero.jpg',
+    'nieuw': 'images/riviera-hero.jpg',
     'bestsellers': 'images/bestsellers-hero.jpg',
     'côte,capri': 'images/hero-handchains.jpg',
     'capri,côte': 'images/hero-handchains.jpg',
