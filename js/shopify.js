@@ -197,11 +197,17 @@ async function haalShopifyProducten() {
   // (foto's én video's samen, in de volgorde zoals in Shopify ingesteld)
   // naast het bestaande images-veld. Voorkomt dat oude cache zonder dat
   // veld video's niet toont op de productpagina.
-  const cache = sessionStorage.getItem('sophea-producten-v8');
+  // Cache-key opgehoogd naar v9 — de lijst wordt nu in pagina's van 100
+  // opgehaald (zie hieronder), dus ook producten na de eerste 100 komen mee.
+  const cache = sessionStorage.getItem('sophea-producten-v9');
   if (cache) return JSON.parse(cache);
 
-  const query = `{
-    products(first: 100) {
+  // Shopify geeft maximaal 100 producten per keer terug. We halen daarom
+  // pagina voor pagina op tot alles binnen is. Zonder dit vielen producten
+  // na de eerste 100 weg (en werd bv. het prijsfilter te laag).
+  const query = `query Producten($na: String) {
+    products(first: 100, after: $na) {
+      pageInfo { hasNextPage endCursor }
       edges {
         node {
 ${PRODUCT_VELDEN}        }
@@ -209,11 +215,19 @@ ${PRODUCT_VELDEN}        }
     }
   }`;
 
-  const json = await shopifyQuery(query);
+  const nodes = [];
+  let na = null;
+  for (let pagina = 0; pagina < 10; pagina++) { // veiligheidslimiet: max 1000 producten
+    const json = await shopifyQuery(query, { na });
+    const data = json.data.products;
+    data.edges.forEach(({ node }) => nodes.push(node));
+    if (!data.pageInfo.hasNextPage) break;
+    na = data.pageInfo.endCursor;
+  }
 
-  const producten = json.data.products.edges.map(({ node }, index) => naarProduct(node, index));
+  const producten = nodes.map((node, index) => naarProduct(node, index));
 
-  sessionStorage.setItem('sophea-producten-v8', JSON.stringify(producten));
+  sessionStorage.setItem('sophea-producten-v9', JSON.stringify(producten));
   return producten;
 }
 
