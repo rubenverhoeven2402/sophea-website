@@ -56,7 +56,7 @@
     'soleil': 'images/soleil-hero.jpg',
     'armbanden': 'images/armbanden-hero.jpg',
     'lune': 'images/lune-hero.jpg',   
-    'elara': 'images/elara-hero.jpg',
+    'elara': 'images/elara-heroo.jpg',
     'éclat': 'images/eclat-hero.jpg',
     'eclat': 'images/eclat-hero.jpg', 
     'riviera': 'images/riviera-hero.jpg',
