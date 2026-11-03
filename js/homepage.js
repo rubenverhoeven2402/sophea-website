@@ -130,6 +130,9 @@
       // Staat altijd vooraan, ook al is het geen nieuw product (bestseller).
       // Het begin van de handle is genoeg, bv. 'azure-oorbellen-helder'.
       vast: ['azure-oorbellen-helder'],
+      // Er staat altijd minstens één paar oorbellen tussen, uit welke
+      // collectie dan ook (nieuw of ouder). Bestsellers krijgen voorrang.
+      altijdEen: 'oorbellen',
       filter: p => p.prijs < 30,
       link: 'collectie.html',
       linkTekst: 'Bekijk alle sieraden',
@@ -178,6 +181,17 @@
       const vast = (groep.vast || [])
         .map(vindVast)
         .filter(p => p && p.beschikbaar !== false);
+      // Minstens één product uit een bepaalde categorie (bv. oorbellen),
+      // ook als het niet nieuw is. Alleen nodig als er nog geen tussen zit.
+      if (groep.altijdEen && !vast.some(p => p.categorieen?.includes(groep.altijdEen))) {
+        const kandidaten = PRODUCTS.filter(p =>
+          p.beschikbaar !== false && groep.filter(p) && p.categorieen?.includes(groep.altijdEen) && !vast.includes(p)
+        );
+        const bestsellers = kandidaten.filter(p => p.badges?.includes('bestseller'));
+        const keuze = hussel(bestsellers.length ? bestsellers : kandidaten)[0];
+        if (keuze) vast.push(keuze);
+      }
+
       const lijst = PRODUCTS.filter(p => p.beschikbaar !== false && isNieuw(p) && groep.filter(p) && !vast.includes(p));
       producten[naam] = [...vast, ...hussel(lijst)].slice(0, 4);
     });
